@@ -1,12 +1,59 @@
 const express = require('express');
 const sequelize = require('./config/database');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+
+
 const initModels = require('./models/init-models');
 const indexRoutes = require('./admin/routes/index');
 
+
 const app = express();
 app.use(express.json());
+app.use(cookieParser('aapkaSecretKey'));
 const Models = initModels(sequelize);
 // Database connection
+
+
+
+
+
+const allowedOrigins = [
+  'http://localhost:5173', 
+  'http://localhost:5174', 
+  'http://localhost:7700',
+  'http://localhost:3000',
+  'http://localhost:5000',
+  'http://0.0.0.0:5173',
+  'http://192.168.43.1:5173',
+  "100.74.13.20:5173",
+  "100.74.13.20:5174",
+  "192.168.43.1",
+  ]; 
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
+
+
+
+
+
+
+
+
+
+
 
 
 
