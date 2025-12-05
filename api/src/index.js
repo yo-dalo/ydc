@@ -74,7 +74,7 @@ sequelize.authenticate()
 
 
 
-app.use('/api', indexRoutes);
+app.use('/api/admin', indexRoutes);
 
 app.get('/x', async (req, res) => {
   try {
