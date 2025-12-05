@@ -3,25 +3,27 @@ const sequelize = require("../../config/database");
 const { Op } = require("sequelize");
 
 const models = initModels(sequelize);
-const { blog } = models;
+const { facility } = models;
 
-class BlogService {
+class FacilityService {
   static async getAll({
     page = 1,
     limit = 10,
     search = "",
-    sortBy = "Id",
-    sortOrder = "DESC",
+    sortBy = "Index_No",
+    sortOrder = "ASC",
     isActive = null,
     indexNo = null,
   } = {}) {
     const offset = (page - 1) * limit;
     const where = {};
 
-    // Search functionality
+    // Search in Name, Title, Description
     if (search) {
       where[Op.or] = [
         { Name: { [Op.like]: `%${search}%` } },
+        { Title: { [Op.like]: `%${search}%` } },
+        { Description: { [Op.like]: `%${search}%` } },
       ];
     }
 
@@ -35,7 +37,7 @@ class BlogService {
       where.Index_No = indexNo;
     }
 
-    const { count, rows } = await blog.findAndCountAll({
+    const { count, rows } = await facility.findAndCountAll({
       where,
       offset,
       limit: parseInt(limit),
@@ -61,27 +63,27 @@ class BlogService {
   }
 
   static async getById(id) {
-    return await blog.findByPk(id);
+    return await facility.findByPk(id);
   }
 
   static async create(data) {
-    const created = await blog.create(data);
+    const created = await facility.create(data);
     return created ? created.Id || created.id || created.get("Id") : null;
   }
 
   static async update(id, data) {
-    const [affected] = await blog.update(data, { where: { Id: id } });
+    const [affected] = await facility.update(data, { where: { Id: id } });
     return affected > 0;
   }
 
   static async getForUpdate(id) {
-    return await blog.findByPk(id);
+    return await facility.findByPk(id);
   }
 
   static async delete(id) {
-    const deleted = await blog.destroy({ where: { Id: id } });
+    const deleted = await facility.destroy({ where: { Id: id } });
     return deleted > 0;
   }
 }
 
-module.exports = BlogService;
+module.exports = FacilityService;
