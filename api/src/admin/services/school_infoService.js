@@ -3,9 +3,9 @@ const sequelize = require("../../config/database");
 const { Op } = require("sequelize");
 
 const models = initModels(sequelize);
-const { blog } = models;
+const { school_info } = models;
 
-class BlogService {
+class SchoolInfoService {
   static async getAll({
     page = 1,
     limit = 10,
@@ -35,7 +35,7 @@ class BlogService {
       where.Index_No = indexNo;
     }
 
-    const { count, rows } = await blog.findAndCountAll({
+    const { count, rows } = await school_info.findAndCountAll({
       where,
       offset,
       limit: parseInt(limit),
@@ -61,27 +61,27 @@ class BlogService {
   }
 
   static async getById(id) {
-    return await blog.findByPk(id);
+    return await school_info.findByPk(id);
   }
 
   static async create(data) {
-    const created = await blog.create(data);
+    const created = await school_info.create(data);
     return created ? created.Id || created.id || created.get("Id") : null;
   }
 
   static async update(id, data) {
-    const [affected] = await blog.update(data, { where: { Id: id } });
+    const [affected] = await school_info.update(data, { where: { Id: id } });
     return affected > 0;
   }
 
   static async getForUpdate(id) {
-    return await blog.findByPk(id);
+    return await school_info.findByPk(id);
   }
 
   static async delete(id) {
-    const deleted = await blog.destroy({ where: { Id: id } });
+    const deleted = await school_info.destroy({ where: { Id: id } });
     return deleted > 0;
   }
 }
 
-module.exports = BlogService;
+module.exports = SchoolInfoService;
