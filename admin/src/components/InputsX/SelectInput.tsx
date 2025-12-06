@@ -11,6 +11,7 @@ interface SelectInputProps {
   error?: any[];
   linkTo?: string;
   linkToValue?: string;
+ options?: any[];
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -22,7 +23,8 @@ const SelectInput: React.FC<SelectInputProps> = ({
   selectedValue = "",
   error = [],
   linkTo,
-  linkToValue
+  linkToValue,
+  options = []
 }) => {
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const [resData, setResData] = useState<any[]>([]);
@@ -45,8 +47,9 @@ const SelectInput: React.FC<SelectInputProps> = ({
         const res = await axios.get(endpoint, { 
           signal: controller.signal 
         });
+
         
-        setResData(res.data.data || []);
+        setResData(res.data.data.data || []);
       } catch (err) {
         if (!axios.isCancel(err)) {
           console.error("Fetch error:", err);
@@ -62,6 +65,14 @@ const SelectInput: React.FC<SelectInputProps> = ({
       controller.abort();
     };
   }, [url, linkTo, linkToValue]);
+
+
+useEffect(()=>{
+     setResData(options|| []);  //is me problem h
+},[url])
+
+
+
 
   return (
     <div className="mb-1">

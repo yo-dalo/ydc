@@ -7,6 +7,8 @@ import Axios from "axios";
 import { Link, useParams, useLocation } from 'react-router-dom';
 import isImage from "../../common/Helper/IsImage";
 import { toast } from 'react-toastify';
+import Pagination from '../Pagination';
+
 
 interface TableData {
   [key: string]: any;
@@ -17,7 +19,7 @@ interface TableThreeXProps {
   url: string;
 }
 
-const TableThreeX = ({ url }: TableThreeXProps) => {
+const TableThreeX = ({ url,deleteUrl, }: TableThreeXProps) => {
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
   const pageNumber = queryParams.get('page') || '1';
@@ -27,6 +29,7 @@ const TableThreeX = ({ url }: TableThreeXProps) => {
   const [keyArryX, setKeyArryX] = useState<string[]>([]);
   const [dataX, setDataX] = useState<TableData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [paginationData, setPaginationData] = useState<any>({});
 
   useEffect(() => {
     const source = Axios.CancelToken.source();
@@ -34,15 +37,13 @@ const TableThreeX = ({ url }: TableThreeXProps) => {
     setLoading(true);
     Axios.get(`${url}?page=${pageNumber}`, { cancelToken: source.token })
       .then((res) => {
-
-          const data = res.data.data.data;
-        if (data.length > 0) {
-          setKeyArryX(Object.keys(data[0]));
-          setDataX(data);
-        
-          
+        if (res.data?.data?.data?.length > 0) {
+          setKeyArryX(Object.keys(res?.data.data?.data[0]));
+          setDataX(res?.data?.data?.data);
+          setPaginationData(res?.data?.data?.pagination || null);
+          console.log(res?.data?.data?.pagination);
         } else {
-         // toast.error("No data found");.
+         // toast.error("No data found");
           setDataX([]);
         }
       })
@@ -61,7 +62,7 @@ const TableThreeX = ({ url }: TableThreeXProps) => {
   }, [url, updata, pageNumber]);
 
   const deleteItem = (id: number | string) => {
-    Axios.delete(`${url}/${id}`)
+    Axios.delete(`${deleteUrl}${id}`)
       .then(() => {
         setUpdata(id);
         toast.success("Item deleted successfully");
@@ -82,6 +83,7 @@ const TableThreeX = ({ url }: TableThreeXProps) => {
   }
 
   return (
+    <>
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
@@ -99,25 +101,25 @@ const TableThreeX = ({ url }: TableThreeXProps) => {
           <tbody>
             {dataX.length > 0 ? (
               dataX.map((packageItem) => (
-                <tr key={`row-${packageItem.id || packageItem.name}`}>
+                <tr key={`row-${packageItem.id || packageItem.Id || packageItem.name}`}>
                   <TableTd text_1={(Number(pageNumber) - 1) * 10 + (dataX.indexOf(packageItem) + 1)} />
                   {keyArryX.map((element) => (
                     typeof packageItem[element] === 'string' && isImage(packageItem[element]) ? (
                       <TdImg 
-                        key={`img-${packageItem.id}-${element}`}
+                        key={`img-${packageItem.id || packageItem.Id}-${element}`}
                         src={`/uploads/${packageItem[element]}` || "default-image.png"} 
                       />
                     ) : (
                       <TableTd 
-                        key={`td-${packageItem.id}-${element}`}
+                        key={`td-${packageItem.id||packageItem.Id}-${element}`}
                         text_1={packageItem[element] || '-'} 
                       />
                     )
                   ))}
                   <TebletAction 
-                    more_info_url={`display/${packageItem.Id}`}
-                    delete_url={() => deleteItem(packageItem.Id)} 
-                    update_url={`update/${packageItem.Id}`} 
+                    more_info_url={`display/${packageItem.id || packageItem.Id}`}
+                    delete_url={() => deleteItem(packageItem.id || packageItem.Id)} 
+                    update_url={`update/${packageItem.id || packageItem.Id }`} 
                   />
                 </tr>
               ))
@@ -133,6 +135,13 @@ const TableThreeX = ({ url }: TableThreeXProps) => {
         </table>
       </div>
     </div>
+
+ <Pagination url={url} data={paginationData} />
+
+</>
+
+
+
   );
 };
 

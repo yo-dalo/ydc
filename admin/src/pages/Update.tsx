@@ -1,4 +1,5 @@
 import InputDate from '../components/InputsX/InputDate';
+import Editer from '../components/InputsX/Editer';
 import InputTextArea from '../components/InputsX/InputTextArea';
 import InputNumber from '../components/InputsX/InputNumber';
 import React, { useState, useEffect } from 'react';
@@ -14,7 +15,7 @@ import Input from '../components/InputsX/Input';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import PropTypes from 'prop-types';
 
-const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
+const Update = ({ url,getDataUrl, inputs, pageName = "Form Layout", children }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [formData, setFormData] = useState({});
@@ -24,6 +25,7 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
 
   const handleChange = (key, value) => {
     setFormData(prev => ({ ...prev, [key]: value }));
+  console.log(formData)
   };
 
 
@@ -31,8 +33,10 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
 useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await Yo.get(`${url}${id}`);
-     setValue(response?.data || {});
+        const response = await Yo.get(`${getDataUrl}${id}`);
+     
+          setValue(response?.data || {});
+          
       } catch (error) {
         toast.error("Failed to load data");
       //  console.error("Fetch error:", error);
@@ -43,7 +47,7 @@ useEffect(() => {
     
   }, [url, id]);
 useEffect(() => {
-    setFormData(value)
+   setFormData(value)
   }, [value]);
 
 
@@ -53,7 +57,7 @@ useEffect(() => {
     setLoading(true);
 
     try {
-if (hasFiles) {
+if (inputs?.find((e,i)=>e?.type==="file")) {
   const formDataX = new FormData();
 
   Object.entries(formData).forEach(([key, value]) => {
@@ -71,13 +75,14 @@ if (hasFiles) {
     }
   });
 
-  await axios.put(`${url}${id}`, formDataX, {
+
+  await axios.post(`${url}${id}`, formDataX, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
 } else {
-  await axios.put(`${url}${id}`, formData);
+  await axios.post(`${url}${id}`, formData);
 }
 
       
@@ -97,9 +102,9 @@ if (hasFiles) {
       key: index,
       label: element.name,
       name: element.name,
-      value: formData[element.name] || '',
+      value: formData[element.name] ==0 ? formData[element.name] : formData[element.name]  || '',
       onChange: (e) => handleChange(element.name, e.target.value),
-      disabled: loading,
+      disabled:   loading || element?.disabled,
     };
 
     switch (element.type) {
@@ -107,10 +112,14 @@ if (hasFiles) {
         return <Input {...commonProps} placeholder="Enter value" />;
       case 'number':
         return <InputNumber {...commonProps} placeholder="Enter value" />;
-      case 'date':
-        return <InputDate  {...commonProps} placeholder="Enter value" />; 
+        
+        case 'date':
+        return <InputDate  {...commonProps} placeholder="Enter value" />;
+        
       case 'text-area':
         return <InputTextArea {...commonProps} placeholder="Enter value" />;
+        case 'editer':
+        return <Editer  {...commonProps}  tamplet={element.tamplet} placeholder="Enter value" />; 
       case 'option':
         return (
           <SelectInput
@@ -119,6 +128,7 @@ if (hasFiles) {
             optionValue={element.valueBy}
             optionShowBy={element.optionBy}
             url={element.url}
+            options={element.options}
             selectedValue={formData[element.name] || ''}
             linkTo={element.toLink}
             linkToValue={formData[element.toLink] || ''}
@@ -131,7 +141,6 @@ if (hasFiles) {
             {...commonProps}
             onChange={(e) => {
               if (e.target.files.length > 0) {
-                setHasFiles(true);
                 handleChange(
                   element.name,
                   element.multiple ? Array.from(e.target.files) : e.target.files[0]
@@ -177,6 +186,8 @@ if (hasFiles) {
               <div className="p-6.5">
                 <div className="mb-4.5 flex flex-col gap-6 md:flex-row md:flex-wrap xl:flex-row">
                   {inputs?.map(renderInput)}
+                  
+                  
                   {React.Children.map(children, child => 
                     React.isValidElement(child) 
                       ? React.cloneElement(child, {
@@ -203,10 +214,27 @@ if (hasFiles) {
 
 Update.propTypes = {
   url: PropTypes.string.isRequired,
+  getDataUrl: PropTypes.string.isRequired,
   inputs: PropTypes.arrayOf(
     PropTypes.shape({
-      type: PropTypes.oneOf(['text', 'number', 'text-area', 'option', 'file', 'multiInputs']).isRequired,
+      type: PropTypes.oneOf(['text', 'number', 'text-area', 'option', 'file', 'multiInputs', 'date', 'editer']).isRequired,
       name: PropTypes.string.isRequired,
+      tamplet: PropTypes.arrayOf(
+        PropTypes.shape({
+          code: PropTypes.string.isRequired,
+          name: PropTypes.string.isRequired,
+        })
+      ),
+      optionBy: PropTypes.string,
+      valueBy: PropTypes.string,
+      url: PropTypes.string,
+      options: PropTypes.arrayOf(
+        PropTypes.shape({
+          value: PropTypes.string.isRequired,
+          label: PropTypes.string.isRequired,
+        })
+      ),
+      disabled: PropTypes.bool,
       // Add other prop-specific validations
     })
   ).isRequired,

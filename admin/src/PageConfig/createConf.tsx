@@ -1,9 +1,9 @@
-import MultiInput from '../components/InputsX/MultiInput';
+
 import Update from '../pages/Update';
 import Page_ from '../pages/Page';
 import Create from '../pages/Create';
 import DataDisplay from '../pages/DataDisplay';
-import SelectRoleParmitions from '../components/PartX/SelectRoleParmitions';
+
 
 const createModuleRoutes = (modelName, createFields, updateFields) => {
   const capName = modelName.charAt(0).toUpperCase() + modelName.slice(1);
@@ -45,9 +45,10 @@ const createModuleRoutes = (modelName, createFields, updateFields) => {
       {
         path: `/${modelName}/update/:id`,
         pageName: capName,
-        url: `/api/${modelName}/`,
+        url: `/api/admin/${modelName}/`,
         title: `Update ${capName}`,
         page: <Update
+        getDataUrl={`/api/admin/${modelName}/`}
           pageName={capName}
           url={`/api/admin/${modelName}/`}
           inputs={updateFields}

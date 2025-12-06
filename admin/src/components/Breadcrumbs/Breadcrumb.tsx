@@ -11,31 +11,37 @@ interface BreadcrumbProps {
 }
 
 const Breadcrumb = ({ pageName, links = [] }: BreadcrumbProps) => {
+  const hasLinks = links.length > 0;
+  const showPageName = !hasLinks || pageName !== links[links.length - 1]?.link;
+
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <h2 className="text-title-md2 font-semibold text-black dark:text-white">
+      <Link to="create" className="text-title-md2 font-semibold text-black dark:text-white">
         {pageName}
-      </h2>
+      </Link>
 
       <nav>
         <ol className="flex items-center gap-2">
-          <li>
+          {/* Dashboard link */}
+          <li className="flex items-center">
             <Link className="font-medium" to="/">
               Dashboard
             </Link>
-            {(links.length > 0 || pageName !== 'Dashboard') && <span className="mx-2">/</span>}
+            {(hasLinks || showPageName) && <span className="mx-2">/</span>}
           </li>
-          
+
+          {/* Breadcrumb links */}
           {links.map((link, index) => (
-            <li key={index}>
-              <Link className="font-medium text-primary" to={link.to}>
+            <li key={index} className="flex items-center">
+              <Link  className="font-medium text-primary" to={link.to}>
                 {link.link}
               </Link>
-              {index < links.length - 1 || pageName !== link.link ? <span className="mx-2">/</span> : null}
+              {(index < links.length - 1 || showPageName) && <span className="mx-2">/</span>}
             </li>
           ))}
-          
-          {(links.length === 0 || pageName !== links[links.length - 1]?.link) && (
+
+          {/* Current page */}
+          {showPageName && (
             <li className="font-medium text-primary">
               {pageName}
             </li>

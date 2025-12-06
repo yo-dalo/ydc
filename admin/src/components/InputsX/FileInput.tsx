@@ -39,7 +39,7 @@ const FileInput: React.FC<FileInputProps> = ({ onChange, label, multiple }) => {
       />
 
       {/* Image Previews */}
-      <div className="flex md:max-w-full w-full overflow-scroll">
+      <div className="flex md:max-w-full w-full overflow-x-auto">
         {imagePreview.map((src, index) => (
           <img
             key={index}

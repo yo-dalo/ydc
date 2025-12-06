@@ -1,4 +1,5 @@
 import InputDate from '../components/InputsX/InputDate';
+import Editer from '../components/InputsX/Editer';
 import InputTextArea from '../components/InputsX/InputTextArea';
 import InputNumber from '../components/InputsX/InputNumber';
 import React, { useState, useEffect } from 'react';
@@ -74,6 +75,9 @@ if (hasFiles) {
       onChange: (e) => handleChange(element.name, e.target.value),
       disabled: loading,
     };
+    
+    
+    
 
     switch (element.type) {
       case 'text':
@@ -84,6 +88,8 @@ if (hasFiles) {
         return <InputDate  {...commonProps} placeholder="Enter value" />;
       case 'text-area':
         return <InputTextArea {...commonProps} placeholder="Enter value" />;
+      case 'editer':
+        return <Editer  {...commonProps}  tamplet={element.tamplet} placeholder="Enter value" />;
       case 'option':
         return (
           <SelectInput
@@ -91,6 +97,7 @@ if (hasFiles) {
             setSelecter={handleChange}
             optionValue={element.valueBy}
             optionShowBy={element.optionBy}
+            options={element.options}
             url={element.url}
             selectedValue={formData[element.name] || ''}
             linkTo={element.toLink}
@@ -133,7 +140,13 @@ if (hasFiles) {
         pageName={pageName} 
         link={[
           { link: null, to: '/' },
-          { link: "Create", to: '#' }
+          { link: "Create", to: '#' },
+          { link: "Create", to: '#' },
+          { link: "Create", to: '#' },
+          { link: "Create", to: '#' },
+          { link: "Create", to: '#' },
+          { link: "Create", to: '#' },
+          { link: "Create1", to: '#' }
         ]} 
       />
 
@@ -177,8 +190,23 @@ Create.propTypes = {
   url: PropTypes.string.isRequired,
   inputs: PropTypes.arrayOf(
     PropTypes.shape({
-      type: PropTypes.oneOf(['text', 'number', 'text-area', 'option', 'file', 'multiInputs']).isRequired,
+      type: PropTypes.oneOf(['text', 'number', 'text-area', 'option', 'file', 'multiInputs', 'date', 'editer']).isRequired,
       name: PropTypes.string.isRequired,
+      tamplet: PropTypes.arrayOf(
+        PropTypes.shape({
+          code: PropTypes.string.isRequired,
+          name: PropTypes.string.isRequired,
+        })
+      ),
+      optionBy: PropTypes.string,
+      valueBy: PropTypes.string,
+      options: PropTypes.arrayOf(
+        PropTypes.shape({
+          value: PropTypes.string.isRequired,
+          label: PropTypes.string.isRequired,
+        })
+      ),
+      disabled: PropTypes.bool,
       // Add other prop-specific validations
     })
   ).isRequired,
