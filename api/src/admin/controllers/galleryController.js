@@ -42,7 +42,7 @@ exports.getForUpdate = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const id = await GalleryService.create(req.body);
+    const id = await GalleryService.create(req.body, req.file?.filename);
     return successResponse(res, "Gallery added successfully", { id }, 201);
   } catch (error) {
     return errorResponse(res, error.message);
@@ -51,7 +51,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const updated = await GalleryService.update(req.params.id, req.body);
+    const updated = await GalleryService.update(req.params.id, req.body, req.file?.filename);
     if (!updated) return errorResponse(res, "Gallery not found or no changes made", 404);
     return successResponse(res, "Gallery updated successfully");
   } catch (error) {

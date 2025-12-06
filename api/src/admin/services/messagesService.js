@@ -64,13 +64,14 @@ class MessagesService {
     return await messages.findByPk(id);
   }
 
-  static async create(data) {
+  static async create(data, Image) {
     const created = await messages.create(data);
     return created ? created.Id || created.id || created.get("Id") : null;
   }
 
-  static async update(id, data) {
-    const [affected] = await messages.update(data, { where: { Id: id } });
+  static async update(id, data, Image) {
+      const updateData = Image ? { ...data, Image: Image } : data;
+    const [affected] = await messages.update(updateData, { where: { Id: id } });
     return affected > 0;
   }
 

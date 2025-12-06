@@ -72,9 +72,18 @@ sequelize.authenticate()
   //   .then(() => console.log('Models synced'));
 
 
-
+app.use("/uploads", express.static("uploads"));
 
 app.use('/api/admin', indexRoutes);
+
+
+
+
+
+
+
+
+
 
 app.get('/x', async (req, res) => {
   try {
