@@ -1,8 +1,9 @@
 const AuthService = require("../services/authService");
 const { successResponse, errorResponse } = require("../../utils/response");
+const {adminCookieName,adminJwtSecret} = require("../../config/env")
 const jwt = require('jsonwebtoken');
 
-const adminCookieName = 'token';
+
 const production = false; // local me false, production me true
 
 exports.login = async (req, res) => {
@@ -13,14 +14,14 @@ exports.login = async (req, res) => {
     // JWT token
     const token = jwt.sign(
       { id: item.id, Email: item.Email },
-      process.env.JWT_SECRET || 'secretkey',
+      adminJwtSecret,
       { expiresIn: '1d' }
     );
 
     // Set cookie
     res.cookie(adminCookieName, token, {  // <-- yaha 'token' use karo, data.token nahi
       path: '/',
-      httpOnly: true,  // production ? true : false
+      httpOnly: false,  // production ? true : false
       secure: production,
       sameSite: production ? 'None' : 'Lax',
       maxAge: 24 * 60 * 60 * 1000 // 1 day
@@ -44,7 +45,7 @@ exports.register = async (req, res) => {
 
 exports.is_logined = async (req, res) => {
   try {
-    const id = req.body.id;
+    const id = req.admin.id;
     const user = await AuthService.is_logined(id);
     if (!user) return errorResponse(res, "User not found", 404);
     return successResponse(res, "User is logged in", { user });

@@ -41,8 +41,9 @@ exports.getForUpdate = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
+ 
   try {
-    const id = await BlogService.create(req.body);
+    const id = await BlogService.create(req.body, req.file?.filename);
     return successResponse(res, "Blog added successfully", { id }, 201);
   } catch (error) {
     return errorResponse(res, error.message);
@@ -51,7 +52,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const updated = await BlogService.update(req.params.id, req.body);
+    const updated = await BlogService.update(req.params.id, req.body, req.file?.filename);
     if (!updated) return errorResponse(res, "Blog not found or no changes made", 404);
     return successResponse(res, "Blog updated successfully");
   } catch (error) {

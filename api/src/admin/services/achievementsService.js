@@ -87,13 +87,14 @@ class AchievementsService {
     return await achievements.findByPk(id);
   }
 
-  static async create(data) {
-    const created = await achievements.create(data);
+  static async create(data,Image) {
+    const created = await achievements.create({...data, Image: Image});
     return created ? created.Id || created.id || created.get("Id") : null;
   }
 
-  static async update(id, data) {
-    const [affected] = await achievements.update(data, { where: { Id: id } });
+  static async update(id, data,Image) {
+          const updateData = Image ? { ...data, Image: Image } : data;
+    const [affected] = await achievements.update(updateData, { where: { Id: id } });
     return affected > 0;
   }
 
