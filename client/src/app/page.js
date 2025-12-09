@@ -1,11 +1,21 @@
 import Image from "next/image";
+import  NavOne  from "@/part/home/nav/navOne";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen w-screen   bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full  flex-col items-center justify-between  bg-white dark:bg-black ">
-       
-        
+    <div>
+      <main>
+       <section className="w-screen h-screen bg-emerald-50">
+         <NavOne />
+        hello
+
+
+
+
+
+     
+       </section>
+      
       </main>
     </div>
   );
