@@ -1,48 +1,51 @@
-import { createContext, useContext, useState,useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Yo from "../common/Helper/Yo"
 import { toast } from 'react-toastify';
-import eruda from "eruda"; 
+import eruda from "eruda";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-const go =   useNavigate()
-  
+  const go = useNavigate()
+
   const [admin, setAdmin] = useState({
-    isLogin:false,
-    img:"",
-    name:"_",
-    phone:"",
-    email:"",
-    id:null,
-    
+    isLogin: false,
+    img: "",
+    name: "_",
+    phone: "",
+    email: "",
+    id: null,
+
   }); // or use token instead
 
-const isLogin= async()=>{
-  try {
-    const res =  await Yo.get("/api/admin/auth/")
-   
-  
-   const {name,phone,email,id, img}= res.data
-    setAdmin({...admin,
-    isLogin:true,
-    name:name,
-    phone:phone,
-    email:email,
-    img,
-    id:id,
-      
-    });
-  } catch (error) {
-    console.error("login field");
-  }
-    
-}
+  const isLogin = async () => {
+    try {
+      const res = await Yo.get("/api/admin/auth/")
 
- useEffect(() => { 
-   eruda.init();
-  isLogin()
+      console.log(res.data.user)
+
+
+      const { Name, phone, Email, Id, img } = res.data.user
+      setAdmin({
+        ...admin,
+        isLogin: true,
+        name: Name,
+        phone: phone,
+        email: Email,
+        img,
+        id: Id,
+
+      });
+    } catch (error) {
+      console.error("login field");
+    }
+
+  }
+
+  useEffect(() => {
+    eruda.init();
+    isLogin()
   }, []);
 
 
@@ -50,31 +53,32 @@ const isLogin= async()=>{
 
   const login = async (adminData) => {
 
-      
-    try {
-      
 
-   const res =  await Yo.post("/api/admin/auth/login" ,
-  //  {User:"test@gmail.com",Password:"12345"}
-   adminData
-   )
-   const {name,phone,email,id,img }= res.data
-    setAdmin({...admin,
-    isLogin:true,
-    name:name,
-    phone:phone,
-    email:email,
-    id:id,
-    img,
-      
-    });
-    go("/")
-    
+    try {
+
+
+      const res = await Yo.post("/api/admin/auth/login",
+        //  {User:"test@gmail.com",Password:"12345"}
+        adminData
+      )
+      const { Name, phone, Email, Id, img } = res.data.user
+       setAdmin({
+        ...admin,
+        isLogin: true,
+        name: Name,
+        phone: phone,
+        email: Email,
+        img,
+        id: Id,
+
+      });
+      go("/")
+
     } catch (error) {
       toast.error(error.message)
     }
-    
-    
+
+
   };
 
   const logout = () => {

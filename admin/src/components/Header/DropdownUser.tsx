@@ -17,13 +17,13 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {admin.name}
           </span>
           <span className="block text-xs">UX Designer</span>
         </span>
 
         <span className="h-12 w-12 overflow-hidden rounded-full">
-         { admin?.img && <img  src={"/uploads/"+admin?.img} alt="admin img" />}
+          {admin?.img && <img src={"/uploads/" + admin?.img} alt="admin img" />}
         </span>
 
         <svg

@@ -4,14 +4,14 @@ const schoolWelcomeMessageCreateFields = [
   { type: "text", name: "Title" },
   { type: "text", name: "Message" },
   { type: "text", name: "Read_More_Url" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  { type: "option", name: "Is_Active", options: ["active", "inactive"] },
 ];
 
 const schoolWelcomeMessageUpdateFields = [
   { type: "text", name: "Title" },
   { type: "text", name: "Message" },
   { type: "text", name: "Read_More_Url" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  { type: "option", name: "Is_Active", options: ["active", "inactive"] },
 ];
 
 const SchoolWelcomeMessage = createModuleRoutes(
