@@ -61,8 +61,8 @@ export const AuthProvider = ({ children }) => {
         //  {User:"test@gmail.com",Password:"12345"}
         adminData
       )
-      const { Name, phone, Email, Id, img } = res.data.user
-       setAdmin({
+      const { Name, phone, Email, Id, img } = res.data
+      setAdmin({
         ...admin,
         isLogin: true,
         name: Name,

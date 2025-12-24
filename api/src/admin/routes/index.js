@@ -44,6 +44,6 @@ router.use("/school-welcome-message", school_welcome_messageRoutes);
 router.use("/toper-category", toper_categoryRoutes);
 router.use("/toper", toperRoutes);
 router.use("/useful-link", useful_linkRoutes);
-router.use("/", dash_boardRoutes);
 router.use('/auth', authRoutes);
+router.use("/", dash_boardRoutes);
 module.exports = router;

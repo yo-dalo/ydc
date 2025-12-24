@@ -1,10 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import LogoDark from '../../images/logo/logo-dark.svg';
-import Logo from '../../images/logo/logo.svg';
+import Logo from '../../images/logo/logo.png';
 import Axios from 'axios';
 import { useAuth } from "../../context/AuthContext";
 import Yo from "../../common/Helper/Yo";
@@ -14,27 +14,27 @@ import Yo from "../../common/Helper/Yo";
 
 
 const SignIn: React.FC = () => {
-  
+
   //const go = useNavigate();
-  
+
   const navigate = useNavigate();
   const location = useLocation();
-  
-  
-  const {admin,login} =useAuth();
-  const [formData, setFormData] = useState({});
-  
-const handleFormData = (key,value)=>{
-  setFormData(prev => ({ ...prev,[key]:value}));
-}
-  
- const handleSubmit = async (e)=>{
-   e.preventDefault();
-   login(formData);
-  }
-  
 
-  
+
+  const { admin, login } = useAuth();
+  const [formData, setFormData] = useState({});
+
+  const handleFormData = (key, value) => {
+    setFormData(prev => ({ ...prev, [key]: value }));
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    login(formData);
+  }
+
+
+
 
   useEffect(() => {
     if (admin?.isLogin) {
@@ -50,13 +50,13 @@ const handleFormData = (key,value)=>{
 
   // ... rest of your component
 
-  
-  
-  
+
+
+
   return (
     <>
       <Breadcrumb pageName="Sign In" />
-{admin.name}
+      {admin.name}
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
@@ -201,17 +201,17 @@ const handleFormData = (key,value)=>{
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <span className="mb-1.5 block font-medium">Start for free</span>
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign In to TailAdmin
+                Sign In to ydc
               </h2>
 
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Email Or Phone 
+                    Email Or Phone
                   </label>
                   <div className="relative">
                     <input
-                     onChange={(e)=>handleFormData("User",e.target.value)}
+                      onChange={(e) => handleFormData("User", e.target.value)}
                       value={formData.User || ''}
                       name="phoneOrEmail"
                       type="text"
@@ -245,7 +245,7 @@ const handleFormData = (key,value)=>{
                   </label>
                   <div className="relative">
                     <input
-                     onChange={(e)=>handleFormData("Password",e.target.value)}
+                      onChange={(e) => handleFormData("Password", e.target.value)}
                       value={formData.Password || ''}
                       type="password"
                       placeholder="6+ Characters, 1 Capital letter"

@@ -2,7 +2,7 @@ import Msg from './common/Massage/Msg';
 import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 //import { Page } from '../Page.config'; 
-import  Page  from './PageConfig/index'; 
+import Page from './PageConfig/index';
 import { toast } from 'react-toastify';
 
 
@@ -30,7 +30,7 @@ function App() {
   }, [pathname]);
 
   useEffect(() => {
-    
+
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
@@ -38,98 +38,98 @@ function App() {
     <Loader />
   ) : (
     <>
-    <Msg />
-  
-    <DefaultLayout>
-     {/*<ConfirmBox />*/}
-     <ConfirmBox />
-      <Routes>
+      <Msg />
 
-      
-        <Route
-          index
-          element={
-            <>
+      <DefaultLayout>
+        {/*<ConfirmBox />*/}
+        <ConfirmBox />
+        <Routes>
+
+
+          <Route
+            index
+            element={
+              <>
                 <ProtectedRoute>
-              <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <ECommerce />
-                  </ProtectedRoute>
-            </>
-          }
-        />
-        
-     
-      
-        
-        {Page?.map((element,index)=>(
-          element?.map((element_,index_)=>(
-           <Route
-          path={element_?.path}
-          element={
-            <>
-              <ProtectedRoute>
-              <PageTitle title={element_?.title||""} />
-              {element_?.page }
-              </ProtectedRoute>
-            </>
-          }
-        />
-            ))
-        ))}
-        
-        
-        
-        
-        
-        
-        
-        
-        
+                  <PageTitle title="eCommerce Dashboard | ydc - Tailwind CSS Admin Dashboard Template" />
+                  <ECommerce />
+                </ProtectedRoute>
+              </>
+            }
+          />
 
-        <Route
-          path="/settings"
-          element={
-            <>
+
+
+
+          {Page?.map((element, index) => (
+            element?.map((element_, index_) => (
+              <Route
+                path={element_?.path}
+                element={
+                  <>
                     <ProtectedRoute>
-              <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Settings />
-                  </ProtectedRoute>
-            </>
-          }
-        />
-        
-        
-        
-        
-        
-        
-        
-
-        <Route
-          path="/auth/signin"
-          element={
-            <>
-              <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <SignIn />
-            </>
-          }
-        />
+                      <PageTitle title={element_?.title || ""} />
+                      {element_?.page}
+                    </ProtectedRoute>
+                  </>
+                }
+              />
+            ))
+          ))}
 
 
-            <Route
-          path="/auth/signup"
-          element={
-            <>
-              <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <SignUp />
-            </>
-          }
-        />
-    
-      </Routes>
-    </DefaultLayout>
 
-    
+
+
+
+
+
+
+
+          <Route
+            path="/settings"
+            element={
+              <>
+                <ProtectedRoute>
+                  <PageTitle title="Settings | ydc - Tailwind CSS Admin Dashboard Template" />
+                  <Settings />
+                </ProtectedRoute>
+              </>
+            }
+          />
+
+
+
+
+
+
+
+
+          <Route
+            path="/auth/signin"
+            element={
+              <>
+                <PageTitle title="Signin | ydc - Tailwind CSS Admin Dashboard Template" />
+                <SignIn />
+              </>
+            }
+          />
+
+
+          <Route
+            path="/auth/signup"
+            element={
+              <>
+                <PageTitle title="Signup | ydc - Tailwind CSS Admin Dashboard Template" />
+                <SignUp />
+              </>
+            }
+          />
+
+        </Routes>
+      </DefaultLayout>
+
+
 
     </>
   );
