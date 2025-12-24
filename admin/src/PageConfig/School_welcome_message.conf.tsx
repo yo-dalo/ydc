@@ -15,7 +15,7 @@ const schoolWelcomeMessageUpdateFields = [
 ];
 
 const SchoolWelcomeMessage = createModuleRoutes(
-  'school_welcome_message',
+  'school-welcome-message',
   schoolWelcomeMessageCreateFields,
   schoolWelcomeMessageUpdateFields
 );

@@ -72,5 +72,5 @@ const schoolInfoUpdateFields = [
   { type: "select", name: "Is_Active", options: ["active", "inactive"] },
 ];
 
-const SchoolInfo = createModuleRoutes('school_info', schoolInfoCreateFields, schoolInfoUpdateFields);
+const SchoolInfo = createModuleRoutes('school-info', schoolInfoCreateFields, schoolInfoUpdateFields);
 export default SchoolInfo;

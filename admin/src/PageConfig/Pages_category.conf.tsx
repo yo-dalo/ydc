@@ -13,7 +13,7 @@ const pagesCategoryUpdateFields = [
 ];
 
 const PagesCategory = createModuleRoutes(
-  'pages_category',
+  'pages-category',
   pagesCategoryCreateFields,
   pagesCategoryUpdateFields
 );

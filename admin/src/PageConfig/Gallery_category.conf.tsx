@@ -17,7 +17,7 @@ const galleryCategoryUpdateFields = [
 ];
 
 const GalleryCategory = createModuleRoutes(
-  'gallery_category',
+  'gallery-category',
   galleryCategoryCreateFields,
   galleryCategoryUpdateFields
 );

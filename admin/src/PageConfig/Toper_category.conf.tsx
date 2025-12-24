@@ -9,7 +9,7 @@ const toperCategoryUpdateFields = [
 ];
 
 const ToperCategory = createModuleRoutes(
-  'toper_category',
+  'toper-category',
   toperCategoryCreateFields,
   toperCategoryUpdateFields
 );

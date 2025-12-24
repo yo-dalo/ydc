@@ -19,7 +19,7 @@ const admissionMessageUpdateFields = [
 ];
 
 const AdmissionOpenMessage = createModuleRoutes(
-  'admission_open_message',
+  'admission-open-message',
   admissionMessageCreateFields,
   admissionMessageUpdateFields
 );

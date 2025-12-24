@@ -14,5 +14,5 @@ const quickLinkUpdateFields = [
   { type: "select", name: "Is_Active", options: ["active", "inactive"] },
 ];
 
-const QuickLink = createModuleRoutes('quick_link', quickLinkCreateFields, quickLinkUpdateFields);
+const QuickLink = createModuleRoutes('quick-link', quickLinkCreateFields, quickLinkUpdateFields);
 export default QuickLink;
