@@ -21,6 +21,7 @@ const toper_categoryRoutes = require("../routes/toper_categoryRoutes");
 const toperRoutes = require("../routes/toperRoutes");
 const useful_linkRoutes = require("../routes/useful_linkRoutes");
 const authRoutes = require("../routes/authRoutes");
+const dash_boardRoutes = require("../routes/dash_boardRoutes");
 const router = express.Router();
 
 router.use("/achievements", achievementsRoutes);
@@ -43,6 +44,6 @@ router.use("/school-welcome-message", school_welcome_messageRoutes);
 router.use("/toper-category", toper_categoryRoutes);
 router.use("/toper", toperRoutes);
 router.use("/useful-link", useful_linkRoutes);
-
+router.use("/", dash_boardRoutes);
 router.use('/auth', authRoutes);
 module.exports = router;
