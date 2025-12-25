@@ -18,7 +18,7 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [formData, setFormData] = useState({});
-    const [value, setValue] = useState({});
+  const [value, setValue] = useState({});
   const [loading, setLoading] = useState(false);
   const [hasFiles, setHasFiles] = useState(false);
 
@@ -28,21 +28,21 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
 
 
 
-useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await Yo.get(`${url}${id}`);
-     setValue(response?.data || {});
+        setValue(response?.data || {});
       } catch (error) {
         toast.error("Failed to load data");
-      //  console.error("Fetch error:", error);
+        //  console.error("Fetch error:", error);
       }
     };
     fetchData();
     setFormData(value)
-    
+
   }, [url, id]);
-useEffect(() => {
+  useEffect(() => {
     setFormData(value)
   }, [value]);
 
@@ -53,34 +53,34 @@ useEffect(() => {
     setLoading(true);
 
     try {
-if (hasFiles) {
-  const formDataX = new FormData();
+      if (hasFiles) {
+        const formDataX = new FormData();
 
-  Object.entries(formData).forEach(([key, value]) => {
-    if (Array.isArray(value)) {
-      const allFiles = value.every(file => file instanceof File);
-      if (allFiles) {
-        value.forEach(file => {
-          formDataX.append(key, file);
+        Object.entries(formData).forEach(([key, value]) => {
+          if (Array.isArray(value)) {
+            const allFiles = value.every(file => file instanceof File);
+            if (allFiles) {
+              value.forEach(file => {
+                formDataX.append(key, file);
+              });
+            } else {
+              formDataX.append(key, JSON.stringify(value));
+            }
+          } else {
+            formDataX.append(key, value instanceof File ? value : String(value));
+          }
+        });
+
+        await axios.put(`${url}${id}`, formDataX, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         });
       } else {
-        formDataX.append(key, JSON.stringify(value));
+        await axios.put(`${url}${id}`, formData);
       }
-    } else {
-      formDataX.append(key, value instanceof File ? value : String(value));
-    }
-  });
 
-  await axios.put(`${url}${id}`, formDataX, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-} else {
-  await axios.put(`${url}${id}`, formData);
-}
 
-      
       toast.success(`${pageName} created successfully!`);
       navigate(-1);
     } catch (error) {
@@ -92,7 +92,7 @@ if (hasFiles) {
   };
 
   const renderInput = (element, index) => {
-    
+
     const commonProps = {
       key: index,
       label: element.name,
@@ -108,7 +108,7 @@ if (hasFiles) {
       case 'number':
         return <InputNumber {...commonProps} placeholder="Enter value" />;
       case 'date':
-        return <InputDate  {...commonProps} placeholder="Enter value" />; 
+        return <InputDate  {...commonProps} placeholder="Enter value" />;
       case 'text-area':
         return <InputTextArea {...commonProps} placeholder="Enter value" />;
       case 'option':
@@ -118,6 +118,7 @@ if (hasFiles) {
             setSelecter={handleChange}
             optionValue={element.valueBy}
             optionShowBy={element.optionBy}
+            options={element.options}
             url={element.url}
             selectedValue={formData[element.name] || ''}
             linkTo={element.toLink}
@@ -145,9 +146,9 @@ if (hasFiles) {
         return (
           <MultiInput
             key={index}
-           value={value[element.name] || ''}
-           inputs={element.inputs}
-           get={(data) =>  handleChange(element.name, data)}
+            value={value[element.name] || ''}
+            inputs={element.inputs}
+            get={(data) => handleChange(element.name, data)}
           />
         );
       default:
@@ -157,12 +158,12 @@ if (hasFiles) {
 
   return (
     <>
-      <Breadcrumb 
-        pageName={pageName} 
+      <Breadcrumb
+        pageName={pageName}
         link={[
           { link: null, to: '/' },
           { link: "Update", to: '#' }
-        ]} 
+        ]}
       />
 
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 md:grid-cols-1">
@@ -177,11 +178,11 @@ if (hasFiles) {
               <div className="p-6.5">
                 <div className="mb-4.5 flex flex-col gap-6 md:flex-row md:flex-wrap xl:flex-row">
                   {inputs?.map(renderInput)}
-                  {React.Children.map(children, child => 
-                    React.isValidElement(child) 
+                  {React.Children.map(children, child =>
+                    React.isValidElement(child)
                       ? React.cloneElement(child, {
-                          send: (key, data) => handleChange(key, data),
-                        })
+                        send: (key, data) => handleChange(key, data),
+                      })
                       : child
                   )}
                 </div>

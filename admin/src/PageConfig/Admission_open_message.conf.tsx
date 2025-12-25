@@ -6,7 +6,12 @@ const admissionMessageCreateFields = [
   { type: "text", name: "Message" },
   { type: "file", name: "Image", multiple: false },
   { type: "text", name: "Read_More_Url" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const admissionMessageUpdateFields = [
@@ -15,7 +20,12 @@ const admissionMessageUpdateFields = [
   { type: "text", name: "Message" },
   { type: "file", name: "Image", multiple: false },
   { type: "text", name: "Read_More_Url" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const AdmissionOpenMessage = createModuleRoutes(

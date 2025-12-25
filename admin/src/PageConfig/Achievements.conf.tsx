@@ -7,7 +7,12 @@ const achievementCreateFields = [
   { type: "date", name: "Year" },
   { type: "number", name: "Index_No" },
   { type: "file", name: "Image", multiple: false },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const achievementUpdateFields = [
@@ -17,7 +22,12 @@ const achievementUpdateFields = [
   { type: "date", name: "Year" },
   { type: "number", name: "Index_No" },
   { type: "file", name: "Image", multiple: false },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const Achievements = createModuleRoutes('achievements', achievementCreateFields, achievementUpdateFields);

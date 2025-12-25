@@ -13,7 +13,12 @@ const admissionCreateFields = [
   { type: "text", name: "Gender" },
   { type: "date", name: "Admission_Date" },
   { type: "text", name: "More_Info" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const admissionUpdateFields = [
@@ -29,7 +34,12 @@ const admissionUpdateFields = [
   { type: "text", name: "Gender" },
   { type: "date", name: "Admission_Date" },
   { type: "text", name: "More_Info" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const Admission = createModuleRoutes('admission', admissionCreateFields, admissionUpdateFields);

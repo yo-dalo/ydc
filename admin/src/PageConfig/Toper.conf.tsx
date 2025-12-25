@@ -11,7 +11,12 @@ const toperCreateFields = [
   { type: "text", name: "Class" },
   { type: "text", name: "Father_name" },
   { type: "text", name: "Rank" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const toperUpdateFields = [
@@ -25,7 +30,12 @@ const toperUpdateFields = [
   { type: "text", name: "Class" },
   { type: "text", name: "Father_name" },
   { type: "text", name: "Rank" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const Toper = createModuleRoutes('toper', toperCreateFields, toperUpdateFields);

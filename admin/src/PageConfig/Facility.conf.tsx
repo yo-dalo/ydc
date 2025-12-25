@@ -6,7 +6,12 @@ const facilityCreateFields = [
   { type: "text", name: "Title" },
   { type: "text", name: "Description" },
   { type: "file", name: "Image", multiple: false },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const facilityUpdateFields = [
@@ -15,7 +20,12 @@ const facilityUpdateFields = [
   { type: "text", name: "Title" },
   { type: "text", name: "Description" },
   { type: "file", name: "Image", multiple: false },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const Facility = createModuleRoutes('facility', facilityCreateFields, facilityUpdateFields);

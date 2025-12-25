@@ -33,7 +33,12 @@ const schoolInfoCreateFields = [
   { type: "text", name: "Contact_Person_Phone" },
   { type: "text", name: "Medium_Of_Instruction" },
   { type: "number", name: "Display_Order" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const schoolInfoUpdateFields = [
@@ -69,7 +74,12 @@ const schoolInfoUpdateFields = [
   { type: "text", name: "Contact_Person_Phone" },
   { type: "text", name: "Medium_Of_Instruction" },
   { type: "number", name: "Display_Order" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const SchoolInfo = createModuleRoutes('school-info', schoolInfoCreateFields, schoolInfoUpdateFields);

@@ -87,10 +87,11 @@ if (hasFiles) {
       case 'option':
         return (
           <SelectInput
-            {...commonProps}
+               {...commonProps}
             setSelecter={handleChange}
             optionValue={element.valueBy}
             optionShowBy={element.optionBy}
+            options={element.options}
             url={element.url}
             selectedValue={formData[element.name] || ''}
             linkTo={element.toLink}

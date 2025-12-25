@@ -5,7 +5,12 @@ const galleryCategoryCreateFields = [
   { type: "text", name: "Title" },
   { type: "number", name: "Index_No" },
   { type: "date", name: "Date" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const galleryCategoryUpdateFields = [
@@ -13,7 +18,12 @@ const galleryCategoryUpdateFields = [
   { type: "text", name: "Title" },
   { type: "number", name: "Index_No" },
   { type: "date", name: "Date" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const GalleryCategory = createModuleRoutes(

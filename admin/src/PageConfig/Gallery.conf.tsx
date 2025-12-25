@@ -4,14 +4,24 @@ const galleryCreateFields = [
   { type: "number", name: "Gallery_Category_Id" },
   { type: "file", name: "Image", multiple: false },
   { type: "text", name: "Description" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const galleryUpdateFields = [
   { type: "number", name: "Gallery_Category_Id" },
   { type: "file", name: "Image", multiple: false },
   { type: "text", name: "Description" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const Gallery = createModuleRoutes('gallery', galleryCreateFields, galleryUpdateFields);

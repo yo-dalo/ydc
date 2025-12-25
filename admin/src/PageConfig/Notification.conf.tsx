@@ -7,7 +7,12 @@ const notificationCreateFields = [
   { type: "text", name: "Description" },
   { type: "date", name: "Date" },
   { type: "text", name: "Name" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const notificationUpdateFields = [
@@ -17,7 +22,12 @@ const notificationUpdateFields = [
   { type: "text", name: "Description" },
   { type: "date", name: "Date" },
   { type: "text", name: "Name" },
-  { type: "select", name: "Is_Active", options: ["active", "inactive"] },
+  {
+    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" }]
+  }
 ];
 
 const Notification = createModuleRoutes('notification', notificationCreateFields, notificationUpdateFields);
