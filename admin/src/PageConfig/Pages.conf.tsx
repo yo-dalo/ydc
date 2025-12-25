@@ -9,7 +9,7 @@ const pagesCreateFields = [
     options: [
       { value: "active", label: "Active" },
       { value: "inactive", label: "Inactive" }]
-  }
+  },
   { type: "number", name: "Index_No" },
 ];
 
@@ -22,7 +22,7 @@ const pagesUpdateFields = [
     options: [
       { value: "active", label: "Active" },
       { value: "inactive", label: "Inactive" }]
-  }
+  },
   { type: "number", name: "Index_No" },
 ];
 
