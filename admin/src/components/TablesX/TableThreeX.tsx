@@ -7,7 +7,7 @@ import Axios from "axios";
 import { Link, useParams, useLocation } from 'react-router-dom';
 import isImage from "../../common/Helper/IsImage";
 import { toast } from 'react-toastify';
-
+import Pagination from '../Pagination';
 interface TableData {
   [key: string]: any;
   id?: number | string;
@@ -22,27 +22,30 @@ const TableThreeX = ({ url }: TableThreeXProps) => {
   const queryParams = new URLSearchParams(search);
   const pageNumber = queryParams.get('page') || '1';
   const { id } = useParams();
-  
+
   const [updata, setUpdata] = useState<number | string | null>(null);
   const [keyArryX, setKeyArryX] = useState<string[]>([]);
   const [dataX, setDataX] = useState<TableData[]>([]);
+  const [paginationX, setPaginationX] = useState({})
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const source = Axios.CancelToken.source();
-    
+
     setLoading(true);
     Axios.get(`${url}?page=${pageNumber}`, { cancelToken: source.token })
       .then((res) => {
 
-          const data = res.data.data.data;
+        const data = res.data.data.data;
+
         if (data.length > 0) {
           setKeyArryX(Object.keys(data[0]));
           setDataX(data);
-        
-          
+          setPaginationX(res.data.data.pagination)
+
+
         } else {
-         // toast.error("No data found");.
+          // toast.error("No data found");.
           setDataX([]);
         }
       })
@@ -103,21 +106,21 @@ const TableThreeX = ({ url }: TableThreeXProps) => {
                   <TableTd text_1={(Number(pageNumber) - 1) * 10 + (dataX.indexOf(packageItem) + 1)} />
                   {keyArryX.map((element) => (
                     typeof packageItem[element] === 'string' && isImage(packageItem[element]) ? (
-                      <TdImg 
+                      <TdImg
                         key={`img-${packageItem.id}-${element}`}
-                        src={`/uploads/${packageItem[element]}` || "default-image.png"} 
+                        src={`/uploads/${packageItem[element]}` || "default-image.png"}
                       />
                     ) : (
-                      <TableTd 
+                      <TableTd
                         key={`td-${packageItem.id}-${element}`}
-                        text_1={packageItem[element] || '-'} 
+                        text_1={packageItem[element] || '-'}
                       />
                     )
                   ))}
-                  <TebletAction 
+                  <TebletAction
                     more_info_url={`display/${packageItem.Id}`}
-                    delete_url={() => deleteItem(packageItem.Id)} 
-                    update_url={`update/${packageItem.Id}`} 
+                    delete_url={() => deleteItem(packageItem.Id)}
+                    update_url={`update/${packageItem.Id}`}
                   />
                 </tr>
               ))
@@ -125,13 +128,15 @@ const TableThreeX = ({ url }: TableThreeXProps) => {
               <tr>
                 <td colSpan={keyArryX.length + 2} className="py-4  whitespace-nowrap flex text-red-500 ">
                   No data found .............
-                  
+
                 </td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
+      <Pagination pagination={paginationX} url={url} />
+
     </div>
   );
 };
