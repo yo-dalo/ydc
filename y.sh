@@ -256,22 +256,31 @@ ROUTE_USE="router.use('/${MODEL_NAME_LOWER}', ${ROUTE_VAR});"
 
 echo -e "${YELLOW}Updating: $INDEX_FILE${NC}"
 
-if [ -f "$INDEX_FILE" ]; then
-    # Check if route already exists
+# Agar index.js nahi hai to create karo
+if [ ! -f "$INDEX_FILE" ]; then
+    echo -e "${YELLOW}⚠ index.js nahi mila, create kiya ja raha hai...${NC}"
+    cat <<EOF > "$INDEX_FILE"
+const express = require('express');
+const router = express.Router();
+
+$ROUTE_IMPORT
+
+$ROUTE_USE
+
+module.exports = router;
+EOF
+    echo -e "${GREEN}✓ index.js created and route added${NC}"
+else
+    # Agar file hai to check karo route already hai ya nahi
     if grep -q "$ROUTE_VAR" "$INDEX_FILE"; then
         echo -e "${YELLOW}⚠ Route already exists in index.js${NC}"
     else
-        # Add import after the last require statement
         sed -i "/const.*require.*Routes');$/a $ROUTE_IMPORT" "$INDEX_FILE"
-        
-        # Add router.use before module.exports
         sed -i "/module.exports = router;/i $ROUTE_USE" "$INDEX_FILE"
-        
         echo -e "${GREEN}✓ Updated index.js with new route${NC}"
     fi
-else
-    echo -e "${RED}✗ index.js not found!${NC}"
 fi
+
 
 echo ""
 echo -e "${GREEN}========================================${NC}"
