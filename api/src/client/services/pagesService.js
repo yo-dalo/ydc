@@ -3,62 +3,31 @@ const sequelize = require("../../config/database");
 const { Op } = require("sequelize");
 
 const models = initModels(sequelize);
-const { pages } = models;
+const { pages, pages_category } = models;
 
 class PagesService {
-  static async getAll({
-    page = 1,
-    limit = 10,
-    search = "",
-    sortBy = "Id",
-    sortOrder = "DESC",
-    isActive = null,
-    indexNo = null,
-  } = {}) {
-    const offset = (page - 1) * limit;
-    const where = {};
-
-    // Search functionality
-    if (search) {
-      where[Op.or] = [
-        { Name: { [Op.like]: `%${search}%` } },
-      ];
-    }
-
-    // Filter by Is_Active
-    if (isActive === "active" || isActive === "inactive") {
-      where.Is_Active = isActive;
-    }
-
-    // Filter by Index_No
-    if (indexNo !== null && indexNo !== "") {
-      where.Index_No = indexNo;
-    }
-
-    const { count, rows } = await pages.findAndCountAll({
-      where,
-      offset,
-      limit: parseInt(limit),
-      order: [[sortBy, sortOrder.toUpperCase() === "ASC" ? "ASC" : "DESC"]],
-    });
-
-    return {
-      data: rows,
-      pagination: {
-        total: count,
-        page: parseInt(page),
-        limit: parseInt(limit),
-        totalPages: Math.ceil(count / limit),
+static async getAll() {
+  return await pages_category.findAll({
+    where: { 
+      Is_Active: "active" 
+    },
+    attributes: ["Id", "Name", "Index_No"],
+    include: [
+      {
+        model: pages,
+        as: "pages",                    // ← Yeh bilkul sahi hai (init-models mein hasMany ka alias 'pages' hota hai)
+        where: { 
+          Is_Active: "active" 
+        },
+        required: false,                // Category dikhegi chahe uske pages ho ya na ho
+        attributes: ["Id", "Name", "Index_No", "Page_Data"],
+        order: [["Index_No", "ASC"]],   // Pages ko bhi index ke hisab se sort karo
       },
-      filters: {
-        search,
-        isActive,
-        indexNo,
-        sortBy,
-        sortOrder,
-      },
-    };
-  }
+    ],
+    order: [["Index_No", "ASC"]],       // Categories ko index ke hisab se sort karo
+  });
+}
+
 
   static async getById(id) {
     return await pages.findByPk(id);
