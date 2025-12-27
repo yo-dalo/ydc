@@ -7,26 +7,40 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Check if model name is provided
-if [ -z "$1" ]; then
-    echo -e "${RED}Error: Model name required!${NC}"
-    echo "Usage: ./generate-routes.sh <model_name>"
-    echo "Example: ./generate-routes.sh admission"
+if [ -z "$1" ] || [ -z "$2" ]; then
+    echo -e "${RED}Error: Model name path  required!${NC}"
+   echo "Usage: ./generate-routes.sh <model_name> <folder_path>"
+    echo "Example: ./generate-routes.sh admission ../api/client"
     exit 1
 fi
 
 MODEL_NAME=$1
+BASE_PATH=$2
+
 MODEL_NAME_LOWER=$(echo "$MODEL_NAME" | tr '[:upper:]' '[:lower:]')
 MODEL_NAME_CAMEL=$(echo "$MODEL_NAME_LOWER" | sed 's/_\(.\)/\U\1/g' | sed 's/^\(.\)/\U\1/')
 
-echo -e "${YELLOW}Generating routes for model: $MODEL_NAME${NC}"
+
+echo -e "${YELLOW}Model: $MODEL_NAME${NC}"
+echo -e "${YELLOW}Base Path: $BASE_PATH${NC}"
 
 # Create directories if they don't exist
-mkdir -p api/src/admin/routes
-mkdir -p api/src/admin/controllers
-mkdir -p api/src/admin/services
+if [ ! -d "$BASE_PATH" ]; then
+    echo -e "${YELLOW}⚠ Folder exist nahi karta, create kiya ja raha hai...${NC}"
+    mkdir -p "$BASE_PATH"
+    echo -e "${GREEN}✓ Folder created: $BASE_PATH${NC}"
+fi
+
+# Create sub folders
+mkdir -p "$BASE_PATH/routes"
+mkdir -p "$BASE_PATH/controllers"
+mkdir -p "$BASE_PATH/services"
+
+
+
 
 # 1. Generate Route File
-ROUTE_FILE="api/src/admin/routes/${MODEL_NAME_LOWER}Routes.js"
+ROUTE_FILE="$BASE_PATH/routes/${MODEL_NAME_LOWER}Routes.js"
 echo -e "${GREEN}Creating: $ROUTE_FILE${NC}"
 
 cat > "$ROUTE_FILE" << 'EOF'
@@ -48,7 +62,7 @@ sed -i "s/CONTROLLER_NAME/${MODEL_NAME_LOWER}Controller/g" "$ROUTE_FILE"
 sed -i "s/CONTROLLER_FILE/${MODEL_NAME_LOWER}Controller/g" "$ROUTE_FILE"
 
 # 2. Generate Controller File
-CONTROLLER_FILE="api/src/admin/controllers/${MODEL_NAME_LOWER}Controller.js"
+CONTROLLER_FILE="$BASE_PATH/controllers/${MODEL_NAME_LOWER}Controller.js"
 echo -e "${GREEN}Creating: $CONTROLLER_FILE${NC}"
 
 cat > "$CONTROLLER_FILE" << 'EOF'
@@ -131,7 +145,7 @@ sed -i "s/CONTROLLER_NAME/${MODEL_NAME_LOWER}Controller/g" "$CONTROLLER_FILE"
 sed -i "s/DISPLAY_NAME/$DISPLAY_NAME/g" "$CONTROLLER_FILE"
 
 # 3. Generate Service File
-SERVICE_FILE="api/src/admin/services/${MODEL_NAME_LOWER}Service.js"
+SERVICE_FILE="$BASE_PATH/services/${MODEL_NAME_LOWER}Service.js"
 echo -e "${GREEN}Creating: $SERVICE_FILE${NC}"
 
 cat > "$SERVICE_FILE" << 'EOF'
@@ -232,7 +246,10 @@ echo -e "${GREEN}✓ Controller file created: $CONTROLLER_FILE${NC}"
 echo -e "${GREEN}✓ Service file created: $SERVICE_FILE${NC}"
 
 # 4. Update index.js
-INDEX_FILE="api/src/admin/routes/index.js"
+
+INDEX_FILE="$BASE_PATH/routes/index.js"
+echo $INDEX_FILE
+
 ROUTE_VAR="${MODEL_NAME_LOWER}Routes"
 ROUTE_IMPORT="const ${ROUTE_VAR} = require('./${MODEL_NAME_LOWER}Routes');"
 ROUTE_USE="router.use('/${MODEL_NAME_LOWER}', ${ROUTE_VAR});"
