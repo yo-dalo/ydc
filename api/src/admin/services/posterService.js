@@ -64,13 +64,13 @@ class PosterService {
     return await poster.findByPk(id);
   }
 
-  static async create(data,Image) {
-    const created = await poster.create(data);
+  static async create(data, Image) {
+    const created = await poster.create({ ...data, Image });
     return created ? created.Id || created.id || created.get("Id") : null;
   }
 
-  static async update(id, data,Image) {
-      const updateData = Image ? { ...data, Image: Image } : data;
+  static async update(id, data, Image) {
+    const updateData = Image ? { ...data, Image: Image } : data;
     const [affected] = await poster.update(updateData, { where: { Id: id } });
     return affected > 0;
   }
