@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const initModels = require('./models/init-models');
 const indexRoutes = require('./admin/routes/index');
-
+const clientRoutes = require('./client/routes/index');
 
 const app = express();
 app.use(express.json());
@@ -19,8 +19,8 @@ const Models = initModels(sequelize);
 
 
 const allowedOrigins = [
-  'http://localhost:5173', 
-  'http://localhost:5174', 
+  'http://localhost:5173',
+  'http://localhost:5174',
   'http://localhost:7700',
   'http://localhost:3000',
   'http://localhost:5000',
@@ -29,7 +29,7 @@ const allowedOrigins = [
   "100.74.13.20:5173",
   "100.74.13.20:5174",
   "192.168.43.1",
-  ]; 
+];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -62,20 +62,20 @@ sequelize.authenticate()
   .then(() => console.log('Database connected'))
   .catch(err => console.log('Error: ', err));
 
-  // Sync models
+// Sync models
 
 
 
 // sirf ek baar development mein
 
-  // sequelize.sync({ force: true })
-  //   .then(() => console.log('Models synced'));
+// sequelize.sync({ force: true })
+//   .then(() => console.log('Models synced'));
 
 
 app.use("/uploads", express.static("uploads"));
 
 app.use('/api/admin', indexRoutes);
-
+app.use("/api/client", clientRoutes)
 
 
 
@@ -87,7 +87,7 @@ app.use('/api/admin', indexRoutes);
 
 app.get('/x', async (req, res) => {
   try {
-    
+
     const { messages } = Models;
     const allmessages = await messages.findAll();
     res.json(allmessages);
@@ -95,7 +95,7 @@ app.get('/x', async (req, res) => {
     console.error('Error fetching pages:', err);
     res.status(500).json({ error: err.message });
   }
- });
+});
 
 
 
