@@ -7,7 +7,13 @@ const toperCreateFields = [
   { type: "text", name: "Marks_Percentage" },
   { type: "text", name: "Description" },
   { type: "text", name: "Year" },
-  { type: "select", name: "Gender", options: ["male", "female"] },
+ 
+  {
+    type: "option", name: "Gender", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "male", label: "male" },
+      { value: "female", label: "female" }]
+  },
   { type: "text", name: "Class" },
   { type: "text", name: "Father_name" },
   { type: "text", name: "Rank" },
@@ -26,7 +32,12 @@ const toperUpdateFields = [
   { type: "text", name: "Marks_Percentage" },
   { type: "text", name: "Description" },
   { type: "text", name: "Year" },
-  { type: "select", name: "Gender", options: ["male", "female"] },
+  {
+    type: "option", name: "Gender", optionBy: "value", valueBy: "label",
+    options: [
+      { value: "male", label: "male" },
+      { value: "female", label: "female" }]
+  },
   { type: "text", name: "Class" },
   { type: "text", name: "Father_name" },
   { type: "text", name: "Rank" },
