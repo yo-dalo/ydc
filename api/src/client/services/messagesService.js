@@ -3,9 +3,9 @@ const sequelize = require("../../config/database");
 const { Op } = require("sequelize");
 
 const models = initModels(sequelize);
-const { poster } = models;
+const { messages } = models;
 
-class PosterService {
+class MessagesService {
   static async getAll({
     page = 1,
     limit = 10,
@@ -35,7 +35,7 @@ class PosterService {
       where.Index_No = indexNo;
     }
 
-    const { count, rows } = await poster.findAndCountAll({
+    const { count, rows } = await messages.findAndCountAll({
       where,
       offset,
       limit: parseInt(limit),
@@ -61,28 +61,27 @@ class PosterService {
   }
 
   static async getById(id) {
-    return await poster.findByPk(id);
+    return await messages.findByPk(id);
   }
 
-  static async create(data, Image) {
-    const created = await poster.create({ ...data, Image });
+  static async create(data) {
+    const created = await messages.create(data);
     return created ? created.Id || created.id || created.get("Id") : null;
   }
 
-  static async update(id, data, Image) {
-    const updateData = Image ? { ...data, Image: Image } : data;
-    const [affected] = await poster.update(updateData, { where: { Id: id } });
+  static async update(id, data) {
+    const [affected] = await messages.update(data, { where: { Id: id } });
     return affected > 0;
   }
 
   static async getForUpdate(id) {
-    return await poster.findByPk(id);
+    return await messages.findByPk(id);
   }
 
   static async delete(id) {
-    const deleted = await poster.destroy({ where: { Id: id } });
+    const deleted = await messages.destroy({ where: { Id: id } });
     return deleted > 0;
   }
 }
 
-module.exports = PosterService;
+module.exports = MessagesService;

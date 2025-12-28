@@ -64,13 +64,19 @@ class ToperService {
     return await toper.findByPk(id);
   }
 
-  static async create(data,Image) {
-    const created = await toper.create(data);
+  static async create(data, Image) {
+    console.log(data)
+
+    const created = await toper.create({ ...data, Image });
+    console.log(created)
     return created ? created.Id || created.id || created.get("Id") : null;
+
+
+
   }
 
-  static async update(id, data,Image) {
-      const updateData = Image ? { ...data, Image: Image } : data;
+  static async update(id, data, Image) {
+    const updateData = Image ? { ...data, Image: Image } : data;
     const [affected] = await toper.update(updateData, { where: { Id: id } });
     return affected > 0;
   }
