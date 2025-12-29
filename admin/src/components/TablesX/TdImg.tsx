@@ -7,13 +7,17 @@ const TdImg = ({src}) => {
     
   },[src])
   
-  return ( 
-    <td className="border-b border-[#eee] py-5 px-4 pl-5 dark:border-strokedark xl:pl-11">
-                  <img src={img} className="font-medium scale-[3] text-black dark:text-white" />
-                  
-                  
-                </td>
-  )
+
+return ( 
+  <td className="border-b border-[#eee] h-24 w-52 min-w-52 max-h-27 py-5 px-4 pl-5 overflow-hidden dark:border-strokedark xl:pl-11">
+    <img
+      src={img}
+      className="w-full h-full object-contain overflow-hidden text-ellipsis whitespace-nowrap"
+    />
+  </td>
+)
+
+
 }
 
 export default TdImg
