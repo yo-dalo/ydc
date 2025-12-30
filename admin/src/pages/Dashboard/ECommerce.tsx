@@ -21,15 +21,11 @@ const ECommerce: React.FC = () => {
 
     Yo.get("/api/helper/count/").then((data) => {
       // console.log(data.data[0]);
-      setCount(data.data[0])
+      setCount(data?.data[0])
     }).catch((r) => {
-      console.log(r);
-
+      // console.log(r);
+      
     })
-
-
-
-
 
   }, [])
   useEffect(() => {

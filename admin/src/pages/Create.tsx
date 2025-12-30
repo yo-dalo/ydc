@@ -66,7 +66,6 @@ const Create = ({ url, inputs, pageName = "Form Layout", children }) => {
 
   const renderInput = (element, index) => {
     const commonProps = {
-      key: index,
       label: element.name,
       name: element.name,
       value: formData[element.name] || '',
@@ -76,13 +75,13 @@ const Create = ({ url, inputs, pageName = "Form Layout", children }) => {
 
     switch (element.type) {
       case 'text':
-        return <Input {...commonProps} placeholder="Enter value" />;
+        return <Input {...commonProps} key={index} placeholder="Enter value" />;
       case 'number':
-        return <InputNumber {...commonProps} placeholder="Enter value" />;
+        return <InputNumber {...commonProps} key={index} placeholder="Enter value" />;
       case 'date':
-        return <InputDate {...commonProps} placeholder="Enter value" />;
+        return <InputDate {...commonProps} key={index} placeholder="Enter value" />;
       case 'text-area':
-        return <InputTextArea {...commonProps} placeholder="Enter value" />;
+        return <InputTextArea {...commonProps} key={index} placeholder="Enter value" />;
       case 'option':
         return (
           <SelectInput
@@ -101,7 +100,7 @@ const Create = ({ url, inputs, pageName = "Form Layout", children }) => {
       case 'file':
         return (
           <FileInput
-            {...commonProps}
+            {...commonProps} key={index}
             onChange={(e) => {
               if (e.target.files.length > 0) {
                 setHasFiles(true);
