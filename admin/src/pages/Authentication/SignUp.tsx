@@ -7,23 +7,23 @@ import Logo from '../../images/logo/logo.png';
 import Axios from 'axios';
 import admin_Conf from '../../Admin.conf';
 const SignUp: React.FC = () => {
-  
-  const [formData, setFormData] = useState({});
-  const {webSideName } =admin_Conf;
-const handleFormData = (key,value)=>{
-  setFormData(prev => ({ ...prev,[key]:value}));
-}
-  
- const handleSubmit = async (e)=>{
-   e.preventDefault();
-   await Axios.post("./login",formData).then((res)=>{
-     console.log(res);
-   }).catch((err)=>{
-     console.log(err);
-   })
+
+  const [formData, setFormData] = useState<Record<string, any>>({});
+  const { webSideName } = admin_Conf;
+  const handleFormData = (key: string, value: any) => {
+    setFormData(prev => ({ ...prev, [key]: value }));
   }
-  
-  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await Axios.post("./login", formData).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
+
   return (
     <>
       <Breadcrumb pageName="Sign Up" />
@@ -179,7 +179,7 @@ const handleFormData = (key,value)=>{
                   </label>
                   <div className="relative">
                     <input
-                    onChange={(e)=>handleFormData("Name",e.target.value)}
+                      onChange={(e) => handleFormData("Name", e.target.value)}
                       value={formData.Name}
                       type="text"
                       placeholder="Enter your full name"
@@ -216,7 +216,7 @@ const handleFormData = (key,value)=>{
                   </label>
                   <div className="relative">
                     <input
-                    onChange={(e)=>handleFormData("Email",e.target.value)}
+                      onChange={(e) => handleFormData("Email", e.target.value)}
                       value={formData.Email}
                       type="email"
                       placeholder="Enter your email"
@@ -249,7 +249,7 @@ const handleFormData = (key,value)=>{
                   </label>
                   <div className="relative">
                     <input
-                    onChange={(e)=>handleFormData("Password",e.target.value)}
+                      onChange={(e) => handleFormData("Password", e.target.value)}
                       value={formData.Password}
                       type="password"
                       placeholder="Enter your password"
@@ -286,7 +286,7 @@ const handleFormData = (key,value)=>{
                   </label>
                   <div className="relative">
                     <input
-                      onChange={(e)=>handleFormData("re_password",e.target.value)}
+                      onChange={(e) => handleFormData("re_password", e.target.value)}
                       value={formData.re_password}
                       type="password"
                       placeholder="Re-enter your password"

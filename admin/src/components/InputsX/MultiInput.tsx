@@ -4,13 +4,20 @@ import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleRemove } from "react-icons/ci";
 
 
-const MultiInput = ({inputs,name,get,value=[]}) => {
-    const [loop, setLoop] = useState([1]);
-    const [all, setAll] = useState([]);
-    
-    
+interface MultiInputProps {
+  inputs?: any[];
+  name?: string | number;
+  get?: (data: any) => void;
+  value?: any[];
+}
 
-const addOrReplaceItem = (index, newItem) => {
+const MultiInput: React.FC<MultiInputProps> = ({ inputs = [], name, get = () => { }, value = [] }) => {
+  const [loop, setLoop] = useState<number[]>([1]);
+  const [all, setAll] = useState<any[]>([]);
+
+
+
+  const addOrReplaceItem = (index, newItem) => {
     setAll((prevItems) => {
       if (index >= 0 && index < prevItems.length) {
         const updatedItems = [...prevItems];
@@ -21,44 +28,44 @@ const addOrReplaceItem = (index, newItem) => {
       }
     });
   };
-  
+
   const deleteElement = (index) => {
     setLoop((prevItems) => prevItems.filter((_, i) => i !== index));
     setAll((prevItems) => prevItems.filter((_, i) => i !== index));
   };
 
-    const add=(index,obj)=>{
-   // setAll([...all,obj])
-   console.info(obj);
-    addOrReplaceItem(index,obj)
-    
-    }
+  const add = (index, obj) => {
+    // setAll([...all,obj])
+    console.info(obj);
+    addOrReplaceItem(index, obj)
 
-  useEffect(()=>{
-    console.log("value",value);
-   get(all)
-  },[all])
-  
-  
+  }
+
+  useEffect(() => {
+    console.log("value", value);
+    get(all)
+  }, [all])
+
+
   return (
     <div className="min-w-full flex flex-col gap-1.5">
-    <div className="font-semibold py-3"> Multi Input <CiCirclePlus className="text-blue-700" onClick={()=> setLoop([...loop,1])} /> </div>
-   {loop.map((i,index)=>(
-   <div key={index} className="relative">
-   <InputX
-     name={index}
-    inputs={inputs}
-    value={value[index]}
-    get={(data)=>add(index,data)}
-    />
-    
-    
-    <CiCircleRemove onClick={(e)=>deleteElement(index)} className="absolute text-red-500 text-2xl z-40 bottom-2 right-2" />
-    
-   </div>
-   
-   
-     )) }
+      <div className="font-semibold py-3"> Multi Input <CiCirclePlus className="text-blue-700" onClick={() => setLoop([...loop, 1])} /> </div>
+      {loop.map((i, index) => (
+        <div key={index} className="relative">
+          <InputX
+            name={index}
+            inputs={inputs}
+            value={value[index]}
+            get={(data) => add(index, data)}
+          />
+
+
+          <CiCircleRemove onClick={(e) => deleteElement(index)} className="absolute text-red-500 text-2xl z-40 bottom-2 right-2" />
+
+        </div>
+
+
+      ))}
 
     </div>
   )

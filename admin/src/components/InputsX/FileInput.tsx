@@ -4,9 +4,11 @@ interface FileInputProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
   multiple?: boolean;
+  value?: any;
+  disabled?: boolean;
 }
 
-const FileInput: React.FC<FileInputProps> = ({ onChange, label, multiple }) => {
+const FileInput: React.FC<FileInputProps> = ({ onChange, label, multiple, disabled }) => {
   const [imagePreview, setImagePreview] = useState<string[]>([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +33,7 @@ const FileInput: React.FC<FileInputProps> = ({ onChange, label, multiple }) => {
       <input
         type="file"
         multiple={multiple}
+        disabled={disabled}
         onChange={(e) => {
           onChange(e);
           handleFileChange(e);

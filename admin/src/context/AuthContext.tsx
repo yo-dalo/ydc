@@ -4,9 +4,9 @@ import Yo from "../common/Helper/Yo"
 import { toast } from 'react-toastify';
 import eruda from "eruda";
 
-const AuthContext = createContext();
+const AuthContext = createContext<any>(null);
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }: { children?: any }) => {
   const go = useNavigate()
 
   const [admin, setAdmin] = useState({

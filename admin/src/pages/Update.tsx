@@ -160,7 +160,7 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
     <>
       <Breadcrumb
         pageName={pageName}
-        link={[
+        links={[
           { link: null, to: '/' },
           { link: "Update", to: '#' }
         ]}
@@ -180,9 +180,9 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
                   {inputs?.map(renderInput)}
                   {React.Children.map(children, child =>
                     React.isValidElement(child)
-                      ? React.cloneElement(child, {
+                      ? React.cloneElement(child, ({
                         send: (key, data) => handleChange(key, data),
-                      })
+                      } as any))
                       : child
                   )}
                 </div>
@@ -206,7 +206,7 @@ Update.propTypes = {
   url: PropTypes.string.isRequired,
   inputs: PropTypes.arrayOf(
     PropTypes.shape({
-      type: PropTypes.oneOf(['text', 'number', 'text-area', 'option', 'file', 'multiInputs']).isRequired,
+      type: PropTypes.oneOf(['text', 'number', 'password', 'checkbox', 'date', 'text-area', 'option', 'file', 'multiInputs']).isRequired,
       name: PropTypes.string.isRequired,
       // Add other prop-specific validations
     })

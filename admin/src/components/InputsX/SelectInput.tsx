@@ -11,7 +11,10 @@ interface SelectInputProps {
   error?: any[];
   linkTo?: string;
   linkToValue?: string;
- options?: any[];
+  toLink?: Record<string, any> | string;
+  toLinkValue?: string;
+  toLinkValueAlt?: string;
+  options?: any[];
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -24,6 +27,9 @@ const SelectInput: React.FC<SelectInputProps> = ({
   error = [],
   linkTo,
   linkToValue,
+  toLink,
+  toLinkValue,
+  toLinkValueAlt,
   options = []
 }) => {
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
@@ -40,15 +46,21 @@ const SelectInput: React.FC<SelectInputProps> = ({
 
     const fetchData = async () => {
       try {
-        const endpoint = linkTo && linkToValue 
-          ? `${url}/${linkToValue}`
+        const effectiveLinkTo = toLink ?? linkTo;
+        let effectiveLinkToValue = toLinkValue ?? linkToValue ?? toLinkValueAlt;
+        if (effectiveLinkTo && typeof effectiveLinkTo === 'object') {
+          const vals = Object.values(effectiveLinkTo);
+          effectiveLinkToValue = vals.length ? String(vals[0]) : effectiveLinkToValue;
+        }
+        const endpoint = effectiveLinkTo && effectiveLinkToValue
+          ? `${url}/${effectiveLinkToValue}`
           : url;
-        
-        const res = await axios.get(endpoint, { 
-          signal: controller.signal 
+
+        const res = await axios.get(endpoint, {
+          signal: controller.signal
         });
 
-        
+
         setResData(res.data.data.data || []);
       } catch (err) {
         if (!axios.isCancel(err)) {
@@ -67,9 +79,9 @@ const SelectInput: React.FC<SelectInputProps> = ({
   }, [url, linkTo, linkToValue]);
 
 
-useEffect(()=>{
-     setResData(options|| []);  //is me problem h
-},[url])
+  useEffect(() => {
+    setResData(options || []);  //is me problem h
+  }, [url])
 
 
 
@@ -94,21 +106,20 @@ useEffect(()=>{
                 setSelecter(name, e.target.value);
                 changeTextColor();
               }}
-              className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ${
-                isOptionSelected || selectedValue 
-                  ? 'text-black dark:text-white' 
+              className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ${isOptionSelected || selectedValue
+                  ? 'text-black dark:text-white'
                   : ''
-              }`}
+                }`}
               disabled={isLoading}
             >
               <option value="" disabled className="text-body dark:text-bodydark">
                 Select {name?.split("_")?.join(" ")}
               </option>
-              
+
               {resData?.map((r, i) => (
-                <option 
-                  key={`${r[optionValue]}-${i}`} 
-                  value={r[optionValue]} 
+                <option
+                  key={`${r[optionValue]}-${i}`}
+                  value={r[optionValue]}
                   className="text-body dark:text-bodydark"
                 >
                   {r[optionShowBy]}
