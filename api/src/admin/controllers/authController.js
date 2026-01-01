@@ -1,6 +1,6 @@
 const AuthService = require("../services/authService");
 const { successResponse, errorResponse } = require("../../utils/response");
-const {adminCookieName,adminJwtSecret} = require("../../config/env")
+const { adminCookieName, adminJwtSecret } = require("../../config/env")
 const jwt = require('jsonwebtoken');
 
 
@@ -52,4 +52,20 @@ exports.is_logined = async (req, res) => {
   } catch (error) {
     return errorResponse(res, error.message);
   }
+
+};
+exports.logout = async (req, res) => {
+  try {
+    res.clearCookie(adminCookieName, {  // <-- yaha 'token' use karo, data.token nahi
+      path: '/',
+      httpOnly: false,  // production ? true : false
+      secure: production,
+      sameSite: production ? 'None' : 'Lax',
+
+    });
+    return successResponse(res, "Logout successful");
+  } catch (error) {
+    return errorResponse(res, error.message);
+  }
+
 };

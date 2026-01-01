@@ -81,8 +81,25 @@ export const AuthProvider = ({ children }: { children?: any }) => {
 
   };
 
-  const logout = () => {
-    setAdmin(null);
+  const logout = async () => {
+    try {
+      const res = await Yo.get("/api/admin/auth/logout")
+      go('/auth/signin')
+      setAdmin({
+        isLogin: false,
+        img: "",
+        name: "_",
+        phone: "",
+        email: "",
+        id: null,
+
+
+      });
+    } catch (error) {
+      console.error("login field");
+    }
+
+
     // remove token from storage if used
   };
 
