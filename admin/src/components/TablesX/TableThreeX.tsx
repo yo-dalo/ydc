@@ -102,17 +102,17 @@ const TableThreeX = ({ url }: TableThreeXProps) => {
           <tbody>
             {dataX.length > 0 ? (
               dataX.map((packageItem) => (
-                <tr key={`row-${packageItem.id || packageItem.name}`}>
+                <tr key={`row-${packageItem.Id || packageItem.name}`}>
                   <TableTd text_1={(Number(pageNumber) - 1) * 10 + (dataX.indexOf(packageItem) + 1)} />
                   {keyArryX.map((element) => (
                     typeof packageItem[element] === 'string' && isImage(packageItem[element]) ? (
                       <TdImg
-                        key={`img-${packageItem.id}-${element}`}
+                        key={`img-${packageItem.Id}-${element}`}
                         src={`/uploads/${packageItem[element]}` || "default-image.png"}
                       />
                     ) : (
                       <TableTd
-                        key={`td-${packageItem.id}-${element}`}
+                        key={`td-${packageItem.Id}-${element}`}
                         text_1={packageItem[element] || '-'}
                       />
                     )
