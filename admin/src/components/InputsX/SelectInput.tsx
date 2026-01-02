@@ -61,7 +61,14 @@ const SelectInput: React.FC<SelectInputProps> = ({
         });
 
 
-        setResData(res.data.data.data || []);
+        const apiData =
+          res?.data?.data?.data ??
+          res?.data?.data ??
+          res?.data ??
+          [];
+
+        setResData(Array.isArray(apiData) ? apiData : []);
+
       } catch (err) {
         if (!axios.isCancel(err)) {
           console.error("Fetch error:", err);
@@ -80,15 +87,10 @@ const SelectInput: React.FC<SelectInputProps> = ({
 
 
   useEffect(() => {
-    setResData(options || []);  //is me problem h
-
-  }, [url])
-
-  useEffect(() => {
-    //is me problem h
-    console.log(selectedValue)
-  }, [selectedValue])
-
+    if (Array.isArray(options)) {
+      setResData(options);
+    }
+  }, [options]);
 
   return (
     <div className="mb-1">

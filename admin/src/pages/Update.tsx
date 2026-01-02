@@ -39,9 +39,10 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
       }
     };
     fetchData();
-    setFormData(value)
+
 
   }, [url, id]);
+
   useEffect(() => {
     setFormData(value)
   }, [value]);
