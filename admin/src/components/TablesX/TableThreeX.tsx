@@ -30,18 +30,24 @@ const TableThreeX = ({ url }: TableThreeXProps) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setDataX([])
+    setKeyArryX([])
+  }, [url])
+
+
+  useEffect(() => {
     const source = Axios.CancelToken.source();
 
     setLoading(true);
     Axios.get(`${url}?page=${pageNumber}`, { cancelToken: source.token })
       .then((res) => {
 
-        const data = res.data.data.data;
+        const data = res?.data?.data?.data;
 
         if (data.length > 0) {
-          setKeyArryX(Object.keys(data[0]));
-          setDataX(data);
-          setPaginationX(res.data.data.pagination)
+          setKeyArryX(Object.keys(data[0]) || []);
+          setDataX(data || []);
+          setPaginationX(res?.data?.data?.pagination)
 
 
         } else {
@@ -62,6 +68,9 @@ const TableThreeX = ({ url }: TableThreeXProps) => {
       source.cancel("Component unmounted, request canceled.");
     };
   }, [url, updata, pageNumber]);
+
+
+
 
   const deleteItem = (id: number | string) => {
     Axios.delete(`${url}/${id}`)
