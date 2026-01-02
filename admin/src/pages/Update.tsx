@@ -114,6 +114,7 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
         return (
           <SelectInput
             {...commonProps}
+            key={index}
             setSelecter={handleChange}
             optionValue={element.valueBy}
             optionShowBy={element.optionBy}

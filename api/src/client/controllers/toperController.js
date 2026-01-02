@@ -40,31 +40,4 @@ exports.getForUpdate = async (req, res) => {
   }
 };
 
-exports.create = async (req, res) => {
-  try {
-    const id = await ToperService.create(req.body);
-    return successResponse(res, "Toper added successfully", { id }, 201);
-  } catch (error) {
-    return errorResponse(res, error.message);
-  }
-};
 
-exports.update = async (req, res) => {
-  try {
-    const updated = await ToperService.update(req.params.id, req.body);
-    if (!updated) return errorResponse(res, "Toper not found or no changes made", 404);
-    return successResponse(res, "Toper updated successfully");
-  } catch (error) {
-    return errorResponse(res, error.message);
-  }
-};
-
-exports.delete = async (req, res) => {
-  try {
-    const deleted = await ToperService.delete(req.params.id);
-    if (!deleted) return errorResponse(res, "Toper not found", 404);
-    return successResponse(res, "Toper deleted successfully");
-  } catch (error) {
-    return errorResponse(res, error.message);
-  }
-};

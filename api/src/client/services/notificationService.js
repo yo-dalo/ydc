@@ -12,7 +12,7 @@ class NotificationService {
     search = "",
     sortBy = "Id",
     sortOrder = "DESC",
-    isActive = null,
+    isActive = "active",
     indexNo = null,
   } = {}) {
     const offset = (page - 1) * limit;

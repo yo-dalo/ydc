@@ -12,7 +12,7 @@ class ToperService {
     search = "",
     sortBy = "Id",
     sortOrder = "DESC",
-    isActive = null,
+    isActive = "active",
     indexNo = null,
   } = {}) {
     const offset = (page - 1) * limit;
@@ -64,24 +64,7 @@ class ToperService {
     return await toper.findByPk(id);
   }
 
-  static async create(data) {
-    const created = await toper.create(data);
-    return created ? created.Id || created.id || created.get("Id") : null;
-  }
-
-  static async update(id, data) {
-    const [affected] = await toper.update(data, { where: { Id: id } });
-    return affected > 0;
-  }
-
-  static async getForUpdate(id) {
-    return await toper.findByPk(id);
-  }
-
-  static async delete(id) {
-    const deleted = await toper.destroy({ where: { Id: id } });
-    return deleted > 0;
-  }
+ 
 }
 
 module.exports = ToperService;
