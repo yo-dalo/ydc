@@ -21,10 +21,10 @@ const admissionMessageUpdateFields = [
   { type: "file", name: "Image", multiple: false },
   { type: "text", name: "Read_More_Url" },
   {
-    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" }]
+      { label: "active", value: "active" },
+      { label: "inactive", value: "inactive" }]
   }
 ];
 

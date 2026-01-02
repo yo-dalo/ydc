@@ -23,7 +23,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   optionShowBy,
   optionValue,
   setSelecter,
-  selectedValue = "",
+  selectedValue,
   error = [],
   linkTo,
   linkToValue,
@@ -81,10 +81,14 @@ const SelectInput: React.FC<SelectInputProps> = ({
 
   useEffect(() => {
     setResData(options || []);  //is me problem h
+
   }, [url])
 
+  useEffect(() => {
+    //is me problem h
+    console.log(selectedValue)
+  }, [selectedValue])
 
-  
 
   return (
     <div className="mb-1">
@@ -107,8 +111,8 @@ const SelectInput: React.FC<SelectInputProps> = ({
                 changeTextColor();
               }}
               className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ${isOptionSelected || selectedValue
-                  ? 'text-black dark:text-white'
-                  : ''
+                ? 'text-black dark:text-white'
+                : ''
                 }`}
               disabled={isLoading}
             >

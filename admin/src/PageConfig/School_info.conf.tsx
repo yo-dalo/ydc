@@ -34,10 +34,10 @@ const schoolInfoCreateFields = [
   { type: "text", name: "Medium_Of_Instruction" },
   { type: "number", name: "Display_Order" },
   {
-    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" }]
+      { label: "active", value: "active" },
+      { label: "inactive", value: "inactive" }]
   }
 ];
 
@@ -75,10 +75,10 @@ const schoolInfoUpdateFields = [
   { type: "text", name: "Medium_Of_Instruction" },
   { type: "number", name: "Display_Order" },
   {
-    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" }]
+      { label: "active", value: "active" },
+      { label: "inactive", value: "inactive" }]
   }
 ];
 

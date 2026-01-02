@@ -7,7 +7,7 @@ const toperCreateFields = [
   { type: "text", name: "Marks_Percentage" },
   { type: "text", name: "Description" },
   { type: "text", name: "Year" },
- 
+
   {
     type: "option", name: "Gender", optionBy: "value", valueBy: "label",
     options: [
@@ -18,10 +18,10 @@ const toperCreateFields = [
   { type: "text", name: "Father_name" },
   { type: "text", name: "Rank" },
   {
-    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" }]
+      { label: "active", value: "active" },
+      { label: "inactive", value: "inactive" }]
   }
 ];
 
@@ -42,10 +42,10 @@ const toperUpdateFields = [
   { type: "text", name: "Father_name" },
   { type: "text", name: "Rank" },
   {
-    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" }]
+      { label: "active", value: "active" },
+      { label: "inactive", value: "inactive" }]
   }
 ];
 
