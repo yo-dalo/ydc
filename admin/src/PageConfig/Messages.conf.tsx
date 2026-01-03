@@ -8,10 +8,10 @@ const messagesCreateFields = [
   { type: "text", name: "Read_More_Url" },
   { type: "number", name: "Index_No" },
   {
-    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" }]
+      { label: "active", value: "active" },
+      { label: "inactive", value: "inactive" }]
   }
 ];
 
@@ -22,11 +22,11 @@ const messagesUpdateFields = [
   { type: "text", name: "Description" },
   { type: "text", name: "Read_More_Url" },
   { type: "number", name: "Index_No" },
-  {
-    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+ {
+    type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" }]
+      { label: "active", value: "active" },
+      { label: "inactive", value: "inactive" }]
   }
 ];
 

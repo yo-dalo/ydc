@@ -7,10 +7,10 @@ const facilityCreateFields = [
   { type: "text", name: "Description" },
   { type: "file", name: "Image", multiple: false },
   {
-    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" }]
+      { label: "active", value: "active" },
+      { label: "inactive", value: "inactive" }]
   }
 ];
 
@@ -20,11 +20,11 @@ const facilityUpdateFields = [
   { type: "text", name: "Title" },
   { type: "text", name: "Description" },
   { type: "file", name: "Image", multiple: false },
-  {
-    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+ {
+    type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" }]
+      { label: "active", value: "active" },
+      { label: "inactive", value: "inactive" }]
   }
 ];
 

@@ -5,6 +5,7 @@ import axios from 'axios';
 import SelectInput from './SelectInput';
 import FileInput from './FileInput';
 import Input from './Input';
+import MultiInput from './MultiInput';
 
 interface InputElement {
   type: 'text' | 'number' | 'text-area' | 'option' | 'file' | 'multiInputs';
@@ -19,7 +20,7 @@ interface InputElement {
 
 interface InputXProps {
   inputs: InputElement[];
-  name?: string;
+  name?: string | number;
   get: (data: any) => void;
   value?: Record<string, any>;
 }
@@ -45,7 +46,7 @@ const InputX = ({ inputs, name, get, value = {} }: InputXProps) => {
   const renderInput = (element: InputElement, index: number) => {
     // Create a unique key based on element name and index
     const uniqueKey = `${element.name}-${index}`;
-    
+
     const commonProps = {
       key: uniqueKey, // Make sure key is passed properly
       label: element.name,
@@ -71,7 +72,7 @@ const InputX = ({ inputs, name, get, value = {} }: InputXProps) => {
             optionShowBy={element.optionBy || 'label'}
             url={element.url || ''}
             selectedValue={allData[element.name] || ''}
-            toLink={{ [element.toLink || '']: allData[element.toLink || ''] } || {}}
+            toLink={element.toLink ? { [element.toLink]: allData[element.toLink] } : undefined}
             error={[]}
           />
         );

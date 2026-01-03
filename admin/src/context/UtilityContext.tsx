@@ -1,26 +1,26 @@
-import { createContext, useContext, useState,useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Yo from "../common/Helper/Yo"
 
-const AuthContext = createContext();
+const AuthContext = createContext<any>(null);
 
-export const AuthProvider = ({ children }) => {
-const go =   useNavigate()
-  
-  
-  
-  
- useEffect(() => { 
-  
+export const AuthProvider = ({ children }: { children?: any }) => {
+  const go = useNavigate();
+
+
+
+
+  useEffect(() => {
+
   }, []);
 
 
 
 
-  
+
 
   return (
-    <AuthContext.Provider value={{  }}>
+    <AuthContext.Provider value={{}}>
       {children}
     </AuthContext.Provider>
   );

@@ -22,9 +22,9 @@ const SignIn: React.FC = () => {
 
 
   const { admin, login } = useAuth();
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<Record<string, any>>({});
 
-  const handleFormData = (key, value) => {
+  const handleFormData = (key: string, value: any) => {
     setFormData(prev => ({ ...prev, [key]: value }));
   }
 

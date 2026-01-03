@@ -39,9 +39,10 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
       }
     };
     fetchData();
-    setFormData(value)
+
 
   }, [url, id]);
+
   useEffect(() => {
     setFormData(value)
   }, [value]);
@@ -94,7 +95,6 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
   const renderInput = (element, index) => {
 
     const commonProps = {
-      key: index,
       label: element.name,
       name: element.name,
       value: formData[element.name] || '',
@@ -104,17 +104,18 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
 
     switch (element.type) {
       case 'text':
-        return <Input {...commonProps} placeholder="Enter value" />;
+        return <Input {...commonProps} key={index} placeholder="Enter value" />;
       case 'number':
-        return <InputNumber {...commonProps} placeholder="Enter value" />;
+        return <InputNumber {...commonProps} key={index} placeholder="Enter value" />;
       case 'date':
-        return <InputDate  {...commonProps} placeholder="Enter value" />;
+        return <InputDate  {...commonProps} key={index} placeholder="Enter value" />;
       case 'text-area':
-        return <InputTextArea {...commonProps} placeholder="Enter value" />;
+        return <InputTextArea {...commonProps} key={index} placeholder="Enter value" />;
       case 'option':
         return (
           <SelectInput
             {...commonProps}
+            key={index}
             setSelecter={handleChange}
             optionValue={element.valueBy}
             optionShowBy={element.optionBy}
@@ -129,7 +130,7 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
       case 'file':
         return (
           <FileInput
-            {...commonProps}
+            {...commonProps} key={index}
             onChange={(e) => {
               if (e.target.files.length > 0) {
                 setHasFiles(true);
@@ -160,7 +161,7 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
     <>
       <Breadcrumb
         pageName={pageName}
-        link={[
+        links={[
           { link: null, to: '/' },
           { link: "Update", to: '#' }
         ]}
@@ -180,9 +181,9 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
                   {inputs?.map(renderInput)}
                   {React.Children.map(children, child =>
                     React.isValidElement(child)
-                      ? React.cloneElement(child, {
+                      ? React.cloneElement(child, ({
                         send: (key, data) => handleChange(key, data),
-                      })
+                      } as any))
                       : child
                   )}
                 </div>
@@ -206,7 +207,7 @@ Update.propTypes = {
   url: PropTypes.string.isRequired,
   inputs: PropTypes.arrayOf(
     PropTypes.shape({
-      type: PropTypes.oneOf(['text', 'number', 'text-area', 'option', 'file', 'multiInputs']).isRequired,
+      type: PropTypes.oneOf(['text', 'number', 'password', 'checkbox', 'date', 'text-area', 'option', 'file', 'multiInputs']).isRequired,
       name: PropTypes.string.isRequired,
       // Add other prop-specific validations
     })

@@ -14,10 +14,10 @@ const admissionCreateFields = [
   { type: "date", name: "Admission_Date" },
   { type: "text", name: "More_Info" },
   {
-    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" }]
+      { label: "active", value: "active" },
+      { label: "inactive", value: "inactive" }]
   }
 ];
 
@@ -34,11 +34,11 @@ const admissionUpdateFields = [
   { type: "text", name: "Gender" },
   { type: "date", name: "Admission_Date" },
   { type: "text", name: "More_Info" },
-  {
-    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    {
+    type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" }]
+      { label: "active", value: "active" },
+      { label: "inactive", value: "inactive" }]
   }
 ];
 

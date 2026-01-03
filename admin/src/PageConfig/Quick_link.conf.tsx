@@ -4,11 +4,11 @@ const quickLinkCreateFields = [
   { type: "number", name: "Index_No" },
   { type: "text", name: "Url" },
   { type: "text", name: "Name" },
-  {
-    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+   {
+    type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" }]
+      { label: "active", value: "active" },
+      { label: "inactive", value: "inactive" }]
   }
 ];
 
@@ -17,10 +17,10 @@ const quickLinkUpdateFields = [
   { type: "text", name: "Url" },
   { type: "text", name: "Name" },
   {
-    type: "option", name: "Is_Active", optionBy: "value", valueBy: "label",
+    type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" }]
+      { label: "active", value: "active" },
+      { label: "inactive", value: "inactive" }]
   }
 ];
 

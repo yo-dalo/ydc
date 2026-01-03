@@ -4,9 +4,9 @@ import Yo from "../common/Helper/Yo"
 import { toast } from 'react-toastify';
 import eruda from "eruda";
 
-const AuthContext = createContext();
+const AuthContext = createContext<any>(null);
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }: { children?: any }) => {
   const go = useNavigate()
 
   const [admin, setAdmin] = useState({
@@ -81,8 +81,25 @@ export const AuthProvider = ({ children }) => {
 
   };
 
-  const logout = () => {
-    setAdmin(null);
+  const logout = async () => {
+    try {
+      const res = await Yo.get("/api/admin/auth/logout")
+      go('/auth/signin')
+      setAdmin({
+        isLogin: false,
+        img: "",
+        name: "_",
+        phone: "",
+        email: "",
+        id: null,
+
+
+      });
+    } catch (error) {
+      console.error("login field");
+    }
+
+
     // remove token from storage if used
   };
 

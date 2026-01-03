@@ -1,7 +1,7 @@
 import InputDate from '../components/InputsX/InputDate';
 import InputTextArea from '../components/InputsX/InputTextArea';
 import InputNumber from '../components/InputsX/InputNumber';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -27,34 +27,33 @@ const Create = ({ url, inputs, pageName = "Form Layout", children }) => {
     setLoading(true);
 
     try {
-if (hasFiles) {
-  const formDataX = new FormData();
+      if (hasFiles) {
+        const formDataX = new FormData();
 
-  Object.entries(formData).forEach(([key, value]) => {
-    if (Array.isArray(value)) {
-      const allFiles = value.every(file => file instanceof File);
-      if (allFiles) {
-        value.forEach(file => {
-          formDataX.append(key, file);
+        Object.entries(formData).forEach(([key, value]) => {
+          if (Array.isArray(value)) {
+            const allFiles = value.every(file => file instanceof File);
+            if (allFiles) {
+              value.forEach(file => {
+                formDataX.append(key, file);
+              });
+            } else {
+              formDataX.append(key, JSON.stringify(value));
+            }
+          } else {
+            formDataX.append(key, value instanceof File ? value : String(value));
+          }
+        });
+
+        await axios.post(url, formDataX, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         });
       } else {
-        formDataX.append(key, JSON.stringify(value));
+        await axios.post(url, formData);
       }
-    } else {
-      formDataX.append(key, value instanceof File ? value : String(value));
-    }
-  });
 
-  await axios.post(url, formDataX, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-} else {
-  await axios.post(url, formData);
-}
-
-      
       toast.success(`${pageName} created successfully!`);
       navigate(-1);
     } catch (error) {
@@ -67,7 +66,6 @@ if (hasFiles) {
 
   const renderInput = (element, index) => {
     const commonProps = {
-      key: index,
       label: element.name,
       name: element.name,
       value: formData[element.name] || '',
@@ -77,17 +75,18 @@ if (hasFiles) {
 
     switch (element.type) {
       case 'text':
-        return <Input {...commonProps} placeholder="Enter value" />;
+        return <Input {...commonProps} key={index} placeholder="Enter value" />;
       case 'number':
-        return <InputNumber {...commonProps} placeholder="Enter value" />;
+        return <InputNumber {...commonProps} key={index} placeholder="Enter value" />;
       case 'date':
-        return <InputDate  {...commonProps} placeholder="Enter value" />;
+        return <InputDate {...commonProps} key={index} placeholder="Enter value" />;
       case 'text-area':
-        return <InputTextArea {...commonProps} placeholder="Enter value" />;
+        return <InputTextArea {...commonProps} key={index} placeholder="Enter value" />;
       case 'option':
         return (
           <SelectInput
-               {...commonProps}
+            {...commonProps}
+            key={index}
             setSelecter={handleChange}
             optionValue={element.valueBy}
             optionShowBy={element.optionBy}
@@ -102,7 +101,7 @@ if (hasFiles) {
       case 'file':
         return (
           <FileInput
-            {...commonProps}
+            {...commonProps} key={index}
             onChange={(e) => {
               if (e.target.files.length > 0) {
                 setHasFiles(true);
@@ -119,7 +118,7 @@ if (hasFiles) {
         return (
           <MultiInput
             key={index}
-           inputs={element.inputs}
+            inputs={element.inputs}
             get={(data) => handleChange(element.name, data)}
           />
         );
@@ -130,12 +129,12 @@ if (hasFiles) {
 
   return (
     <>
-      <Breadcrumb 
-        pageName={pageName} 
-        link={[
+      <Breadcrumb
+        pageName={pageName}
+        links={[
           { link: null, to: '/' },
           { link: "Create", to: '#' }
-        ]} 
+        ]}
       />
 
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 md:grid-cols-1">
@@ -150,11 +149,11 @@ if (hasFiles) {
               <div className="p-6.5">
                 <div className="mb-4.5 flex flex-col gap-6 md:flex-row md:flex-wrap xl:flex-row">
                   {inputs?.map(renderInput)}
-                  {React.Children.map(children, child => 
-                    React.isValidElement(child) 
-                      ? React.cloneElement(child, {
-                          send: (key, data) => handleChange(key, data),
-                        })
+                  {React.Children.map(children, child =>
+                    React.isValidElement(child)
+                      ? React.cloneElement(child, ({
+                        send: (key, data) => handleChange(key, data),
+                      } as any))
                       : child
                   )}
                 </div>
@@ -178,9 +177,25 @@ Create.propTypes = {
   url: PropTypes.string.isRequired,
   inputs: PropTypes.arrayOf(
     PropTypes.shape({
-      type: PropTypes.oneOf(['text', 'number', 'text-area', 'option', 'file', 'multiInputs']).isRequired,
+      type: PropTypes.oneOf([
+        'text',
+        'number',
+        'password',
+        'checkbox',
+        'date',
+        'text-area',
+        'option',
+        'file',
+        'multiInputs',
+      ]).isRequired,
       name: PropTypes.string.isRequired,
-      // Add other prop-specific validations
+      multiple: PropTypes.bool,
+      options: PropTypes.array,
+      inputs: PropTypes.array,
+      valueBy: PropTypes.string,
+      optionBy: PropTypes.string,
+      url: PropTypes.string,
+      toLink: PropTypes.string,
     })
   ).isRequired,
   pageName: PropTypes.string,

@@ -1,51 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import CardDataStats from '../../components/CardDataStats';
-import ChartOne from '../../components/Charts/ChartOne';
-import ChartThree from '../../components/Charts/ChartThree';
-import ChartTwo from '../../components/Charts/ChartTwo';
-import ChatCard from '../../components/Chat/ChatCard';
-import MapOne from '../../components/Maps/MapOne';
-import TableOne from '../../components/Tables/TableOne';
-import {useAuth} from "../../context/AuthContext"
-import Yo  from "../../common/Helper/Yo"
+
+
+
+
+import { useAuth } from "../../context/AuthContext"
+import Yo from "../../common/Helper/Yo"
 
 import axios from "axios";
 
 
 const ECommerce: React.FC = () => {
- const {admin} = useAuth()
-    const [count, setCount] = useState({});
+  const { admin } = useAuth()
+  const [count, setCount] = useState<any>({});
 
-  
-  useEffect(()=>{
-    
-    Yo.get("/api/helper/count/").then((data)=>{
+
+  useEffect(() => {
+
+    Yo.get("/api/helper/count/").then((data) => {
       // console.log(data.data[0]);
-      setCount(data.data[0])
-    }).catch((r)=>{
-      console.log(r);
+      setCount(data?.data[0])
+    }).catch((r) => {
+      // console.log(r);
       
     })
-    
-    
-    
-    
-    
-  },[])
-  useEffect(()=>{
+
+  }, [])
+  useEffect(() => {
     console.log(count);
-  },[count])
-  
-  
-  
-  
-  
-  
-  
+  }, [count])
+
+
+
+
+
+
+
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-      {admin.name}
+    
 
 
         <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
@@ -135,14 +129,12 @@ const ECommerce: React.FC = () => {
       </div>
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        <ChartOne />
-        <ChartTwo />
-        <ChartThree />
-        <MapOne />
+   
+        
         <div className="col-span-12 xl:col-span-8">
-          <TableOne />
+       
         </div>
-        <ChatCard />
+      
       </div>
     </>
   );
