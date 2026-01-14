@@ -35,13 +35,36 @@ const InputNumber: React.FC<InputNumberProps> = ({ label, placeholder, disabled,
             {label?.split("_")?.join(" ")} <span className="text-meta-1">{disabled ? "Not For Edit" : ""}</span>
           </label>
           <input
-            type="Number"
+            type="text"
+            inputMode="numeric"
             value={value}
-            onChange={onChange}
+            onChange={(e) => {
+              const v = e.target.value;
+              if (/^\d*$/.test(v)) {
+                onChange(e);
+              }
+            }}
+            onKeyDown={(e) => {
+              if (
+                !(
+                  (e.key >= "0" && e.key <= "9") ||
+                  ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)
+                )
+              ) {
+                e.preventDefault();
+              }
+            }}
+            onPaste={(e) => {
+              const paste = e.clipboardData.getData("text");
+              if (!/^\d+$/.test(paste)) {
+                e.preventDefault();
+              }
+            }}
             disabled={disabled}
             placeholder={placeholder}
             className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
+
         </div>
       ))}
     </>
