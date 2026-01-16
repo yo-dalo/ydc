@@ -1,6 +1,7 @@
 import InputDate from '../components/InputsX/InputDate';
 import InputTextArea from '../components/InputsX/InputTextArea';
 import InputNumber from '../components/InputsX/InputNumber';
+import InputCheckbox from '../components/InputsX/InputCheckbox';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -82,6 +83,8 @@ const Create = ({ url, inputs, pageName = "Form Layout", children }) => {
         return <InputDate {...commonProps} key={index} placeholder="Enter value" />;
       case 'text-area':
         return <InputTextArea {...commonProps} key={index} placeholder="Enter value" />;
+      case 'checkbox':
+        return <InputCheckbox {...commonProps} key={index} placeholder="Enter value" />;
       case 'option':
         return (
           <SelectInput

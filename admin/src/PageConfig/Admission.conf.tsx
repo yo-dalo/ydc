@@ -5,7 +5,7 @@ const admissionCreateFields = [
   { type: "text", name: "Father_Name" },
   { type: "text", name: "Mother_Name" },
   { type: "text", name: "Email" },
-  { type: "text", name: "Phone" },
+  { type: "number", name: "Phone" },
   { type: "text", name: "Class" },
   { type: "date", name: "DOB" },
   { type: "text", name: "City" },
@@ -26,7 +26,7 @@ const admissionUpdateFields = [
   { type: "text", name: "Father_Name" },
   { type: "text", name: "Mother_Name" },
   { type: "text", name: "Email" },
-  { type: "text", name: "Phone" },
+  { type: "number", name: "Phone" },
   { type: "text", name: "Class" },
   { type: "date", name: "DOB" },
   { type: "text", name: "City" },
@@ -34,7 +34,7 @@ const admissionUpdateFields = [
   { type: "text", name: "Gender" },
   { type: "date", name: "Admission_Date" },
   { type: "text", name: "More_Info" },
-    {
+  {
     type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
       { label: "active", value: "active" },
