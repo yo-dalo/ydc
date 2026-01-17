@@ -24,7 +24,7 @@ const TebletAction = ({ delete_url, update_url, more_info_url }) => {
             />
           </svg>
         </Link>
-        <button onClick={delete_url} className="hover:text-primary">
+        <button onClick={() => confirm("delete") ? delete_url() : ""} className="hover:text-primary">
           <svg
             className="fill-current"
             width="18"
