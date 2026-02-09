@@ -9,7 +9,7 @@ const pagesCreateFields = [
     optionBy: "Name"
   },
   // { type: "number", name: "Pages_Category_Id" },
-  { type: "text", name: "Page_Data" },
+  { type: "editor", name: "Page_Data" },
    {
     type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
@@ -22,7 +22,7 @@ const pagesCreateFields = [
 const pagesUpdateFields = [
   { type: "text", name: "Name" },
   { type: "number", name: "Pages_Category_Id" },
-  { type: "text", name: "Page_Data" },
+  { type: "editor", name: "Page_Data" },
   {
     type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
