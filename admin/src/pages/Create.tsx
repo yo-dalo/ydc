@@ -12,6 +12,7 @@ import SelectInput from '../components/InputsX/SelectInput';
 import Input from '../components/InputsX/Input';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import PropTypes from 'prop-types';
+import Editer from '../components/InputsX/Editer';
 
 const Create = ({ url, inputs, pageName = "Form Layout", children }) => {
   const navigate = useNavigate();
@@ -85,6 +86,9 @@ const Create = ({ url, inputs, pageName = "Form Layout", children }) => {
         return <InputTextArea {...commonProps} key={index} placeholder="Enter value" />;
       case 'checkbox':
         return <InputCheckbox {...commonProps} key={index} placeholder="Enter value" />;
+      case 'editor':
+        return <Editer {...commonProps} key={index} placeholder="Enter value" />;
+
       case 'option':
         return (
           <SelectInput
