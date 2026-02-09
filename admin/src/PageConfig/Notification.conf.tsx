@@ -4,7 +4,7 @@ const notificationCreateFields = [
   { type: "number", name: "Index_No" },
   { type: "checkbox", name: "Is_Important" },
   { type: "text", name: "Title" },
-  { type: "text", name: "Description" },
+  { type: "editor", name: "Description" },
   { type: "date", name: "Date" },
   { type: "text", name: "Name" },
   {
@@ -19,7 +19,7 @@ const notificationUpdateFields = [
   { type: "number", name: "Index_No" },
   { type: "checkbox", name: "Is_Important" },
   { type: "text", name: "Title" },
-  { type: "text", name: "Description" },
+  { type: "editor", name: "Description" },
   { type: "date", name: "Date" },
   { type: "text", name: "Name" },
   {
