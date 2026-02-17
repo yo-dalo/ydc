@@ -1,6 +1,6 @@
 const initModels = require("../../models/init-models");
 const sequelize = require("../../config/database");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { Op } = require("sequelize");
 
 const models = initModels(sequelize);
@@ -42,7 +42,7 @@ class AuthService {
       Name: data.Name,
       Email: data.Email,
       Password: hash,
-      Username: data.Userrname 
+      Username: data.Userrname
     });
 
     return created ? created.Id || created.id || created.get("Id") : null;
