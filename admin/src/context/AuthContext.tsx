@@ -55,24 +55,28 @@ export const AuthProvider = ({ children }: { children?: any }) => {
 
 
     try {
-
-
       const res = await Yo.post("/api/admin/auth/login",
         //  {User:"test@gmail.com",Password:"12345"}
         adminData
       )
-      const { Name, phone, Email, Id, img } = res.data
-      setAdmin({
-        ...admin,
-        isLogin: true,
-        name: Name,
-        phone: phone,
-        email: Email,
-        img,
-        id: Id,
 
-      });
-      go("/")
+      console.log(res.status)
+      if (res?.response.data.status == 'error') {
+        toast.error(res.response.data.message)
+      } else {
+        const { Name, phone, Email, Id, img } = res.data
+        setAdmin({
+          ...admin,
+          isLogin: true,
+          name: Name,
+          phone: phone,
+          email: Email,
+          img,
+          id: Id,
+
+        });
+        go("/")
+      }
 
     } catch (error) {
       toast.error(error.message)
