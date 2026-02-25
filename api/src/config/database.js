@@ -1,9 +1,17 @@
 const { Sequelize } = require("sequelize");
-const env = require('./env')
+const env = require("./env");
 
-const sequelize = new Sequelize("ydc", "root", "", {
-  host: "localhost",
+const sequelize = new Sequelize(env.dbName, env.dbUser, env.dbPass, {
+  host: env.dbHost,
+  port: env.port,
   dialect: "mysql",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  },
+  logging: false
 });
 
 module.exports = sequelize;
