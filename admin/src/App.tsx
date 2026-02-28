@@ -18,6 +18,7 @@ import Settings from './pages/Settings';
 
 import DefaultLayout from './layout/DefaultLayout';
 import ProtectedRoute from './routes/ProtectedRoute';
+import RegisterSuccess from './pages/Authentication/RegisterSuccess';
 
 
 
@@ -111,6 +112,15 @@ function App() {
               <>
                 <PageTitle title="Signin | ydc - Tailwind CSS Admin Dashboard Template" />
                 <SignIn />
+              </>
+            }
+          />
+              <Route
+            path="/auth/register-success"
+            element={
+              <>
+                <PageTitle title="Register Success   | ydc - Tailwind CSS Admin Dashboard Template" />
+                <RegisterSuccess />
               </>
             }
           />

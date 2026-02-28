@@ -79,6 +79,30 @@ export const AuthProvider = ({ children }: { children?: any }) => {
       }
     }
   };
+
+
+
+  const register = async (adminData) => {
+    try {
+      const res = await Yo.post("/api/admin/auth/register", adminData);
+
+      if (res?.data?.status === "error") {
+        toast.error(res.data.message);
+      } else {
+        go("/auth/register-success");
+      }
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(error.message);
+      }
+    }
+  };
+
+
+
+
   const logout = async () => {
     try {
       await Yo.get("/api/admin/auth/logout");
@@ -98,7 +122,7 @@ export const AuthProvider = ({ children }: { children?: any }) => {
     }
   };
   return (
-    <AuthContext.Provider value={{ admin, login, logout, }}>
+    <AuthContext.Provider value={{ admin, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

@@ -5,8 +5,13 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.png';
 import Axios from 'axios';
+import Yo from "../../common/Helper/Yo";
 import admin_Conf from '../../Admin.conf';
+import { useAuth } from "../../context/AuthContext";
 const SignUp: React.FC = () => {
+
+
+  const { register } = useAuth();
 
   const [formData, setFormData] = useState<Record<string, any>>({});
   const { webSideName } = admin_Conf;
@@ -16,11 +21,7 @@ const SignUp: React.FC = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await Axios.post("./login", formData).then((res) => {
-      console.log(res);
-    }).catch((err) => {
-      console.log(err);
-    })
+    await register(formData)
   }
 
 
@@ -325,7 +326,7 @@ const SignUp: React.FC = () => {
                   />
                 </div>
 
-               
+
 
                 <div className="mt-6 text-center">
                   <p>
