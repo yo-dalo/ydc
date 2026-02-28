@@ -1,6 +1,6 @@
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import React, { useState, useEffect, useRef } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const Editer = ({ label, disabled, value, onChange, ignore = [], className, tamplet = [] }) => {
   const [complement, setComplement] = useState([]);
@@ -19,24 +19,17 @@ const Editer = ({ label, disabled, value, onChange, ignore = [], className, tamp
             <span className="text-meta-1">{disabled ? " Not For Edit" : ""}</span>
           </label>
 
-          <CKEditor
-            editor={ClassicEditor}
-            data={value}
-            onReady={(editor) => {
-              editorRef.current = editor;
-
-              const el = editor.ui.view.element;
-              el.style.backgroundColor = 'rgb(33,33,33)';
-              el.style.color = 'white';
-
-              editor.editing.view.change(writer => {
-                writer.setStyle('background-color', 'rgb(33,33,33)', editor.editing.view.document.getRoot());
-                writer.setStyle('color', 'white', editor.editing.view.document.getRoot());
-              });
+          <ReactQuill
+            ref={editorRef}
+            theme="snow"
+            value={value}
+            readOnly={disabled}
+            onChange={(content) => {
+              onChange({ target: { value: content } });
             }}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              onChange({ target: { value: data } });
+            style={{
+              backgroundColor: 'rgb(33,33,33)',
+              color: 'white'
             }}
           />
 
@@ -47,8 +40,11 @@ const Editer = ({ label, disabled, value, onChange, ignore = [], className, tamp
                 className="px-4 py-2 rounded bg-purple-400 cursor-pointer"
                 onClick={() => {
                   if (editorRef.current) {
-                    const editor = editorRef.current;
-                    editor.setData(editor.getData() + element.code);
+                    const editor = editorRef.current.getEditor();
+                    editor.clipboard.dangerouslyPasteHTML(
+                      editor.getLength(),
+                      element.code
+                    );
                   }
                 }}
               >
