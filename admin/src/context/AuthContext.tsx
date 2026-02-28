@@ -79,11 +79,10 @@ export const AuthProvider = ({ children }: { children?: any }) => {
       }
     }
   };
-
   const logout = async () => {
     try {
-      const res = await Yo.get("/api/admin/auth/logout")
-      go('/auth/signin')
+      await Yo.get("/api/admin/auth/logout");
+
       setAdmin({
         isLogin: false,
         img: "",
@@ -91,17 +90,13 @@ export const AuthProvider = ({ children }: { children?: any }) => {
         phone: "",
         email: "",
         id: null,
-
-
       });
+
+      go("/auth/signin");
     } catch (error) {
-      console.error("login field");
+      console.error(error);
     }
-
-
-    // remove token from storage if used
   };
-
   return (
     <AuthContext.Provider value={{ admin, login, logout, }}>
       {children}
