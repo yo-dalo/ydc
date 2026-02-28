@@ -51,19 +51,14 @@ export const AuthProvider = ({ children }: { children?: any }) => {
 
 
   const login = async (adminData) => {
-
-
     try {
-      const res = await Yo.post("/api/admin/auth/login",
-        //  {User:"test@gmail.com",Password:"12345"}
-        adminData
-      )
+      const res = await Yo.post("/api/admin/auth/login", adminData);
 
-      console.log(res.status)
-      if (res?.response.data.status == 'error') {
-        toast.error(res.response.data.message)
+      if (res?.data?.status === "error") {
+        toast.error(res.data.message);
       } else {
-        const { Name, phone, Email, Id, img } = res.data
+        const { Name, phone, Email, Id, img } = res.data;
+
         setAdmin({
           ...admin,
           isLogin: true,
@@ -72,16 +67,17 @@ export const AuthProvider = ({ children }: { children?: any }) => {
           email: Email,
           img,
           id: Id,
-
         });
-        go("/")
+
+        go("/");
       }
-
     } catch (error) {
-      toast.error(error.message)
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(error.message);
+      }
     }
-
-
   };
 
   const logout = async () => {
