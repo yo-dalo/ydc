@@ -22,10 +22,10 @@ class AuthService {
 
     const user = await admins.findOne({ where: whereClause });
 
-    if (!user) return null;
+    if (!user) throw new Error("User not found");
 
     const match = await bcrypt.compare(data.Password, user.Password);
-    if (!match) return null;
+    if (!match) throw new Error("Invalid password");
 
     return {
       id: user.Id,
