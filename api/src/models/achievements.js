@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('achievements', {
     Id: {
       autoIncrement: true,
@@ -32,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     Is_Active: {
-      type: DataTypes.ENUM('active','inactive'),
+      type: DataTypes.ENUM('active', 'inactive'),
       allowNull: true,
       defaultValue: "active"
     }

@@ -70,8 +70,8 @@ sequelize.authenticate()
 
 // sirf ek baar development mein
 
-// sequelize.sync({ force: true })
-//   .then(() => console.log('Models synced'));
+sequelize.sync({ force: true })
+  .then(() => console.log('Models synced'));
 
 
 app.use("/uploads", express.static("uploads"));
