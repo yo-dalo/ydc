@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(100),
             allowNull: false
         },
-        Sub_domain: {
+        Sub_Domain: {
             type: DataTypes.STRING(100),
             allowNull: false
         },

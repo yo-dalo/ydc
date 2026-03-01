@@ -8,12 +8,9 @@ const { admins } = models;
 
 class AuthService {
   static async login(data) {
-    // Determine whether data.User is email or username
-
-
-
-
-    const whereClause = {};
+    const whereClause = {
+      Branch_Id: data.Branch_Id || null
+    };
     if (data.User.includes('@')) {
       whereClause.Email = data.User;
     } else {
@@ -31,7 +28,8 @@ class AuthService {
       id: user.Id,
       Name: user.Name,
       Email: user.Email,
-      Username: user.Username
+      Username: user.Username,
+      Branch: user.Branch_Id
     };
   }
 
@@ -42,7 +40,8 @@ class AuthService {
       Name: data.Name,
       Email: data.Email,
       Password: hash,
-      Username: data.Userrname
+      Username: data.Username,
+      Branch_Id: data.Branch_Id
     });
 
     return created ? created.Id || created.id || created.get("Id") : null;
