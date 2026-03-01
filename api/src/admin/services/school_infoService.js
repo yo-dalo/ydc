@@ -65,8 +65,8 @@ class SchoolInfoService {
     return await school_info.findOne({ where: { Id: id, Branch_Id: branchId } });
   }
 
-  static async create(data, branchId) {
-    const created = await school_info.create({ ...data, Branch_Id: branchId });
+  static async create(data, img, branchId) {
+    const created = await school_info.create({ ...data, Branch_Id: branchId, Logo_Url: img[1], Favicon_Url: img[0] });
     return created ? created.Id || created.id || created.get("Id") : null;
   }
 

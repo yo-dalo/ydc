@@ -11,7 +11,7 @@ exports.getAll = async (req, res) => {
       sortOrder: req.query.sortOrder || "DESC",
       isActive: req.query.isActive,
       indexNo: req.query.indexNo,
-        branchId: req.admin.Branch_Id
+      branchId: req.admin.Branch_Id
     });
 
     return successResponse(res, "School Info fetched successfully", result);
@@ -42,8 +42,10 @@ exports.getForUpdate = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
+  console.log("Logo URL:", req.files.Logo_Url[0].filename);
+  console.log("Favicon URL:", req.files.Favicon_Url[0].filename);
   try {
-    const id = await SchoolInfoService.create(req.body , req.admin.Branch_Id);
+    const id = await SchoolInfoService.create(req.body, [req.files.Favicon_Url[0].filename, req.files.Logo_Url[0].filename] ,req.admin.Branch_Id);
     return successResponse(res, "School Info added successfully", { id }, 201);
   } catch (error) {
     return errorResponse(res, error.message);
