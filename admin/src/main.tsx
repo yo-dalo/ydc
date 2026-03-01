@@ -8,12 +8,15 @@ import './css/styleX.css';
 
 import 'flatpickr/dist/flatpickr.min.css';
 import { AuthProvider } from "./context/AuthContext";
+import { UtilityProvider } from './context/UtilityContext';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Router>
   <AuthProvider>
+    <UtilityProvider> 
       <App />
+    </UtilityProvider>
     </AuthProvider>
     </Router>
   </React.StrictMode>,
