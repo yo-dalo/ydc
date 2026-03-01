@@ -6,7 +6,7 @@ const models = initModels(sequelize);
 const { blog, admission, notification, poster,toper } = models;
 
 class Dash_boardService {
-  static async getAll(branchId) {
+  static async getAll({branchId}) {
     const totalBlogs = await blog.count({ where: { Branch_Id: branchId } });
    const totalAdmissions = await admission.count({ where: { Branch_Id: branchId } });
    const totalNotifications = await notification.count({ where: { Branch_Id: branchId } });

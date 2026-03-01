@@ -60,7 +60,12 @@ function initModels(sequelize) {
   admission_open_message.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
   messages.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
   notification.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
-
+pages.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  pages_category.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });  
+  gallery.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  gallery_category.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  quick_link.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });  
+  
 
 
 
