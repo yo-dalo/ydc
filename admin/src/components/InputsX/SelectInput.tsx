@@ -68,6 +68,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
           [];
 
         setResData(Array.isArray(apiData) ? apiData : []);
+        console.log(apiData)
 
       } catch (err) {
         if (!axios.isCancel(err)) {
@@ -88,7 +89,12 @@ const SelectInput: React.FC<SelectInputProps> = ({
 
   useEffect(() => {
     if (Array.isArray(options)) {
-      setResData(options);
+      setResData(prev => {
+        if (JSON.stringify(prev) === JSON.stringify(options)) {
+          return prev;
+        }
+        return options;
+      });
     }
   }, [options]);
 

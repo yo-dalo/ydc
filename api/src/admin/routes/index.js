@@ -45,7 +45,7 @@ router.use("/school-welcome-message", adminAuth, school_welcome_messageRoutes);
 router.use("/toper-category", adminAuth, toper_categoryRoutes);
 router.use("/toper", adminAuth, toperRoutes);
 router.use("/useful-link", adminAuth, useful_linkRoutes);
-router.use("/branch", adminAuth, branchRoutes);
+router.use("/branch", branchRoutes);
 router.use('/auth', authRoutes);
 router.use("/", adminAuth, dash_boardRoutes);
 module.exports = router;
