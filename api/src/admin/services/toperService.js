@@ -14,9 +14,10 @@ class ToperService {
     sortOrder = "DESC",
     isActive = null,
     indexNo = null,
+    branchId = null,
   } = {}) {
     const offset = (page - 1) * limit;
-    const where = {};
+    const where = { Branch_Id: branchId };
 
     // Search functionality
     if (search) {
@@ -60,14 +61,14 @@ class ToperService {
     };
   }
 
-  static async getById(id) {
-    return await toper.findByPk(id);
+  static async getById(id, branchId) {
+    return await toper.findOne({ where: { Id: id, Branch_Id: branchId } });
   }
 
-  static async create(data, Image) {
+  static async create(data, Image, branchId) {
     console.log(data)
 
-    const created = await toper.create({ ...data, Image });
+    const created = await toper.create({ ...data, Image, Branch_Id: branchId });
     console.log(created)
     return created ? created.Id || created.id || created.get("Id") : null;
 
@@ -75,18 +76,18 @@ class ToperService {
 
   }
 
-  static async update(id, data, Image) {
+  static async update(id, data, Image, branchId) {
     const updateData = Image ? { ...data, Image: Image } : data;
-    const [affected] = await toper.update(updateData, { where: { Id: id } });
+    const [affected] = await toper.update(updateData, { where: { Id: id, Branch_Id: branchId } });
     return affected > 0;
   }
 
-  static async getForUpdate(id) {
-    return await toper.findByPk(id);
+  static async getForUpdate(id, branchId) {
+    return await toper.findOne({ where: { Id: id, Branch_Id: branchId } });
   }
 
-  static async delete(id) {
-    const deleted = await toper.destroy({ where: { Id: id } });
+  static async delete(id, branchId) {
+    const deleted = await toper.destroy({ where: { Id: id, Branch_Id: branchId } });
     return deleted > 0;
   }
 }

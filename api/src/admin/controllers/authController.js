@@ -11,9 +11,10 @@ exports.login = async (req, res) => {
     const item = await AuthService.login(req.body);
     if (!item) return errorResponse(res, "Invalid credentials", 401);
 
+   
     // JWT token
     const token = jwt.sign(
-      { id: item.id, Email: item.Email },
+      { id: item.id, Email: item.Email, Branch_Id: item.Branch_Id },
       adminJwtSecret,
       { expiresIn: '1d' }
     );

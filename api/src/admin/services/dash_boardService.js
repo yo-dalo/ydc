@@ -6,12 +6,12 @@ const models = initModels(sequelize);
 const { blog, admission, notification, poster,toper } = models;
 
 class Dash_boardService {
-  static async getAll() {
-    const totalBlogs = await blog.count();
-   const totalAdmissions = await admission.count();
-   const totalNotifications = await notification.count();
-   const totalPosters = await poster.count();
-   const totalTopers = await toper.count(); 
+  static async getAll(branchId) {
+    const totalBlogs = await blog.count({ where: { Branch_Id: branchId } });
+   const totalAdmissions = await admission.count({ where: { Branch_Id: branchId } });
+   const totalNotifications = await notification.count({ where: { Branch_Id: branchId } });
+   const totalPosters = await poster.count({ where: { Branch_Id: branchId } });
+   const totalTopers = await toper.count({ where: { Branch_Id: branchId } }); 
 
     return { totalBlogs, totalAdmissions, totalNotifications, totalPosters, totalTopers  };
   }

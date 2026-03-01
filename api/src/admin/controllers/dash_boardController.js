@@ -3,7 +3,9 @@ const { successResponse, errorResponse } = require("../../utils/response");
 
 exports.getAll = async (req, res) => {
   try {
-    const result = await Dash_boardService.getAll();
+    const result = await Dash_boardService.getAll({
+      branchId: req.admin.Branch_Id
+    });
 
     return successResponse(res, "Dashboard fetched successfully", result);
   } catch (error) {

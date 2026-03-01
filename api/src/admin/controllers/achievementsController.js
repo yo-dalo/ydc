@@ -2,6 +2,7 @@ const AchievementsService = require("../services/achievementsService");
 const { successResponse, errorResponse } = require("../../utils/response");
 
 exports.getAll = async (req, res) => {
+ 
   try {
     const result = await AchievementsService.getAll({
       page: req.query.page,
@@ -14,6 +15,7 @@ exports.getAll = async (req, res) => {
       yearFrom: req.query.yearFrom,
       yearTo: req.query.yearTo,
       indexNo: req.query.indexNo,
+      branchId: req.admin.Branch_Id
     });
 
     return successResponse(res, "Achievements fetched successfully", result);
@@ -25,7 +27,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const item = await AchievementsService.getById(req.params.id);
+    const item = await AchievementsService.getById(req.params.id, req.admin.Branch_Id);
     if (!item) return errorResponse(res, "Achievement not found", 404);
     return successResponse(res, "Achievement fetched successfully", item);
   } catch (error) {
@@ -35,7 +37,7 @@ exports.getById = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const id = await AchievementsService.create(req.body, req.file?.filename);
+    const id = await AchievementsService.create(req.body, req.file?.filename, req.admin.Branch_Id);
     return successResponse(res, "Achievement added successfully", { id }, 201);
   } catch (error) {
     return errorResponse(res, error.message);
@@ -44,7 +46,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const updated = await AchievementsService.update(req.params.id, req.body, req.file?.filename);
+    const updated = await AchievementsService.update(req.params.id, req.body, req.file?.filename, req.admin.Branch_Id);
     if (!updated) return errorResponse(res, "Achievement not found or no changes made", 404);
     return successResponse(res, "Achievement updated successfully");
   } catch (error) {
@@ -54,7 +56,7 @@ exports.update = async (req, res) => {
 
 exports.getForUpdate = async (req, res) => {
   try {
-    const item = await AchievementsService.getForUpdate(req.params.id);
+    const item = await AchievementsService.getForUpdate(req.params.id, req.admin.Branch_Id);
     if (!item) return errorResponse(res, "Achievement not found", 404);
     return successResponse(res, "Achievement fetched successfully", item);
   } catch (error) {
@@ -66,7 +68,7 @@ exports.getForUpdate = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const deleted = await AchievementsService.delete(req.params.id);
+    const deleted = await AchievementsService.delete(req.params.id, req.admin.Branch_Id);
     if (!deleted) return errorResponse(res, "Achievement not found", 404);
     return successResponse(res, "Achievement deleted successfully");
   } catch (error) {

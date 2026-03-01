@@ -14,9 +14,10 @@ class SchoolInfoService {
     sortOrder = "DESC",
     isActive = null,
     indexNo = null,
+    branchId = null,
   } = {}) {
     const offset = (page - 1) * limit;
-    const where = {};
+    const where = { Branch_Id: branchId };
 
     // Search functionality
     if (search) {
@@ -60,26 +61,26 @@ class SchoolInfoService {
     };
   }
 
-  static async getById(id) {
-    return await school_info.findByPk(id);
+  static async getById(id, branchId) {
+    return await school_info.findOne({ where: { Id: id, Branch_Id: branchId } });
   }
 
-  static async create(data) {
-    const created = await school_info.create(data);
+  static async create(data, branchId) {
+    const created = await school_info.create({ ...data, Branch_Id: branchId });
     return created ? created.Id || created.id || created.get("Id") : null;
   }
 
-  static async update(id, data) {
-    const [affected] = await school_info.update(data, { where: { Id: id } });
+  static async update(id, data, branchId) {
+    const [affected] = await school_info.update(data, { where: { Id: id, Branch_Id: branchId } });
     return affected > 0;
   }
 
-  static async getForUpdate(id) {
-    return await school_info.findByPk(id);
+  static async getForUpdate(id, branchId) {
+    return await school_info.findOne({ where: { Id: id, Branch_Id: branchId } });
   }
 
-  static async delete(id) {
-    const deleted = await school_info.destroy({ where: { Id: id } });
+  static async delete(id, branchId) {
+    const deleted = await school_info.destroy({ where: { Id: id, Branch_Id: branchId } });
     return deleted > 0;
   }
 }

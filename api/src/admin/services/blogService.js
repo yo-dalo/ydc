@@ -14,9 +14,10 @@ class BlogService {
     sortOrder = "DESC",
     isActive = null,
     indexNo = null,
+    branchId = null,
   } = {}) {
     const offset = (page - 1) * limit;
-    const where = {};
+    const where = { Branch_Id: branchId };
 
     // Search functionality
     if (search) {
@@ -60,27 +61,27 @@ class BlogService {
     };
   }
 
-  static async getById(id) {
-    return await blog.findByPk(id);
+  static async getById(id, branchId) {
+    return await blog.findOne({ where: { Id: id, Branch_Id: branchId } });
   }
 
-  static async create(data, Image) {
-    const created = await blog.create({...data, Image: Image});
+  static async create(data, Image, branchId) {
+    const created = await blog.create({...data, Image: Image, Branch_Id: branchId});
     return created ? created.Id || created.id || created.get("Id") : null;
   }
 
-  static async update(id, data, Image) {
+  static async update(id, data, Image, branchId) {
     const updateData = Image ? { ...data, Image: Image } : data;
-    const [affected] = await blog.update(updateData, { where: { Id: id } });
+    const [affected] = await blog.update(updateData, { where: { Id: id, Branch_Id: branchId } });
     return affected > 0;
   }
 
-  static async getForUpdate(id) {
-    return await blog.findByPk(id);
+  static async getForUpdate(id, branchId) {
+    return await blog.findOne({ where: { Id: id, Branch_Id: branchId } });
   }
 
-  static async delete(id) {
-    const deleted = await blog.destroy({ where: { Id: id } });
+  static async delete(id, branchId) {
+    const deleted = await blog.destroy({ where: { Id: id, Branch_Id: branchId } });
     return deleted > 0;
   }
 }

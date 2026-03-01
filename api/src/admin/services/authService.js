@@ -29,7 +29,7 @@ class AuthService {
       Name: user.Name,
       Email: user.Email,
       Username: user.Username,
-      Branch: user.Branch_Id
+      Branch_Id: user.Branch_Id
     };
   }
 

@@ -11,6 +11,7 @@ exports.getAll = async (req, res) => {
       sortOrder: req.query.sortOrder || "DESC",
       isActive: req.query.isActive,
       indexNo: req.query.indexNo,
+      branchId: req.admin.Branch_Id
     });
 
     return successResponse(res, "School Welcome Message fetched successfully", result);
@@ -22,7 +23,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const item = await SchoolWelcomeMessageService.getById(req.params.id);
+    const item = await SchoolWelcomeMessageService.getById(req.params.id, req.admin.Branch_Id);
     if (!item) return errorResponse(res, "School Welcome Message not found", 404);
     return successResponse(res, "School Welcome Message fetched successfully", item);
   } catch (error) {
@@ -32,7 +33,7 @@ exports.getById = async (req, res) => {
 
 exports.getForUpdate = async (req, res) => {
   try {
-    const item = await SchoolWelcomeMessageService.getForUpdate(req.params.id);
+    const item = await SchoolWelcomeMessageService.getForUpdate(req.params.id, req.admin.Branch_Id);
     if (!item) return errorResponse(res, "School Welcome Message not found", 404);
     return successResponse(res, "School Welcome Message fetched successfully", item);
   } catch (error) {
@@ -42,7 +43,7 @@ exports.getForUpdate = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const id = await SchoolWelcomeMessageService.create(req.body);
+    const id = await SchoolWelcomeMessageService.create(req.body, req.admin.Branch_Id);
     return successResponse(res, "School Welcome Message added successfully", { id }, 201);
   } catch (error) {
     return errorResponse(res, error.message);
@@ -51,7 +52,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const updated = await SchoolWelcomeMessageService.update(req.params.id, req.body);
+    const updated = await SchoolWelcomeMessageService.update(req.params.id, req.body, req.admin.Branch_Id);
     if (!updated) return errorResponse(res, "School Welcome Message not found or no changes made", 404);
     return successResponse(res, "School Welcome Message updated successfully");
   } catch (error) {
@@ -61,7 +62,7 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const deleted = await SchoolWelcomeMessageService.delete(req.params.id);
+    const deleted = await SchoolWelcomeMessageService.delete(req.params.id, req.admin.Branch_Id);
     if (!deleted) return errorResponse(res, "School Welcome Message not found", 404);
     return successResponse(res, "School Welcome Message deleted successfully");
   } catch (error) {

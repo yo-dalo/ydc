@@ -14,6 +14,7 @@ class AdminsService {
     sortOrder = "DESC",
     isActive = null,
     indexNo = null,
+    branchId = null,
   } = {}) {
     const offset = (page - 1) * limit;
     const where = {};
@@ -22,12 +23,16 @@ class AdminsService {
     if (search) {
       where[Op.or] = [
         { Name: { [Op.like]: `%${search}%` } },
+        { Email: { [Op.like]: `%${search}%` } },
+        { Username: { [Op.like]: `%${search}%` } },
+        { Branch_Id: branchId }
       ];
     }
 
     // Filter by Is_Active
     if (isActive === "active" || isActive === "inactive") {
       where.Is_Active = isActive;
+
     }
 
     // Filter by Index_No
@@ -60,26 +65,26 @@ class AdminsService {
     };
   }
 
-  static async getById(id) {
-    return await admins.findByPk(id);
+  static async getById(id, branchId) {
+    return await admins.findOne({ where: { Id: id, Branch_Id: branchId } });
   }
 
-  static async create(data) {
-    const created = await admins.create(data);
+  static async create(data, branchId) {
+    const created = await admins.create({...data, Branch_Id: branchId});
     return created ? created.Id || created.id || created.get("Id") : null;
   }
 
-  static async update(id, data) {
-    const [affected] = await admins.update(data, { where: { Id: id } });
+  static async update(id, data, branchId) {
+    const [affected] = await admins.update(data, { where: { Id: id, Branch_Id: branchId } });
     return affected > 0;
   }
 
-  static async getForUpdate(id) {
-    return await admins.findByPk(id);
+  static async getForUpdate(id, branchId) {
+    return await admins.findOne({ where: { Id: id, Branch_Id: branchId } });
   }
 
-  static async delete(id) {
-    const deleted = await admins.destroy({ where: { Id: id } });
+  static async delete(id, branchId) {
+    const deleted = await admins.destroy({ where: { Id: id, Branch_Id: branchId } });
     return deleted > 0;
   }
 }
