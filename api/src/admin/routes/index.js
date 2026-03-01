@@ -45,5 +45,5 @@ router.use("/toper-category", adminAuth, toper_categoryRoutes);
 router.use("/toper", adminAuth, toperRoutes);
 router.use("/useful-link", adminAuth, useful_linkRoutes);
 router.use('/auth', authRoutes);
-router.use("/", dash_boardRoutes);
+router.use("/", adminAuth, dash_boardRoutes);
 module.exports = router;
