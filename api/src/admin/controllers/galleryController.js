@@ -43,7 +43,11 @@ exports.getForUpdate = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const id = await GalleryService.create(req.body, req.file?.filename, req.admin.Branch_Id);
+    const id = await GalleryService.create(
+      req.body,
+      req.files ? req.files.map(file => file.filename) : [],
+      req.admin.Branch_Id
+    );
     return successResponse(res, "Gallery added successfully", { id }, 201);
   } catch (error) {
     return errorResponse(res, error.message);
