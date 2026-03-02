@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const Editer = ({ label, disabled, value, onChange, ignore = [], className, tamplet = [] }) => {
-  const [complement, setComplement] = useState([]);
   const editorRef = useRef(null);
 
-  useEffect(() => {
-    setComplement([label].filter(x => !ignore.includes(x)));
+  const complement = useMemo(() => {
+    return [label].filter(x => !ignore.includes(x));
   }, [label, ignore]);
 
   return (

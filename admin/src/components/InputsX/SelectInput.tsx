@@ -30,7 +30,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   toLink,
   toLinkValue,
   toLinkValueAlt,
-  options = []
+  options
 }) => {
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const [resData, setResData] = useState<any[]>([]);
@@ -41,6 +41,12 @@ const SelectInput: React.FC<SelectInputProps> = ({
   };
 
   useEffect(() => {
+    // ✅ If options are provided, use them and skip API call
+    if (Array.isArray(options) && options.length > 0) {
+      setResData(options);
+      return;
+    }
+
     const controller = new AbortController();
     setIsLoading(true);
 
@@ -48,18 +54,22 @@ const SelectInput: React.FC<SelectInputProps> = ({
       try {
         const effectiveLinkTo = toLink ?? linkTo;
         let effectiveLinkToValue = toLinkValue ?? linkToValue ?? toLinkValueAlt;
-        if (effectiveLinkTo && typeof effectiveLinkTo === 'object') {
+
+        if (effectiveLinkTo && typeof effectiveLinkTo === "object") {
           const vals = Object.values(effectiveLinkTo);
-          effectiveLinkToValue = vals.length ? String(vals[0]) : effectiveLinkToValue;
+          effectiveLinkToValue = vals.length
+            ? String(vals[0])
+            : effectiveLinkToValue;
         }
-        const endpoint = effectiveLinkTo && effectiveLinkToValue
-          ? `${url}/${effectiveLinkToValue}`
-          : url;
+
+        const endpoint =
+          effectiveLinkTo && effectiveLinkToValue
+            ? `${url}/${effectiveLinkToValue}`
+            : url;
 
         const res = await axios.get(endpoint, {
-          signal: controller.signal
+          signal: controller.signal,
         });
-
 
         const apiData =
           res?.data?.data?.data ??
@@ -68,8 +78,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
           [];
 
         setResData(Array.isArray(apiData) ? apiData : []);
-
-      } catch (err) {
+      } catch (err: any) {
         if (!axios.isCancel(err)) {
           console.error("Fetch error:", err);
         }
@@ -83,19 +92,12 @@ const SelectInput: React.FC<SelectInputProps> = ({
     return () => {
       controller.abort();
     };
-  }, [url, linkTo, linkToValue]);
-
-
-  useEffect(() => {
-    if (Array.isArray(options)) {
-      setResData(options);
-    }
-  }, [options]);
+  }, [url, linkToValue, toLinkValue, toLinkValueAlt, options]);
 
   return (
     <div className="mb-1">
       <label className="mb-2.5 block text-black dark:text-white">
-        {name?.split("_")?.join(" ")}
+        {name?.split("_").join(" ")}
       </label>
 
       <div className="relative z-20 bg-transparent dark:bg-form-input">
@@ -113,22 +115,22 @@ const SelectInput: React.FC<SelectInputProps> = ({
                 changeTextColor();
               }}
               className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ${isOptionSelected || selectedValue
-                ? 'text-black dark:text-white'
-                : ''
+                  ? "text-black dark:text-white"
+                  : ""
                 }`}
               disabled={isLoading}
             >
               <option value="" disabled className="text-body dark:text-bodydark">
-                Select {name?.split("_")?.join(" ")}
+                Select {name?.split("_").join(" ")}
               </option>
 
               {resData?.map((r, i) => (
                 <option
-                  key={`${r[optionValue]}-${i}`}
-                  value={r[optionValue]}
+                  key={`${r?.[optionValue]}-${i}`}
+                  value={r?.[optionValue]}
                   className="text-body dark:text-bodydark"
                 >
-                  {r[optionShowBy]}
+                  {r?.[optionShowBy]}
                 </option>
               ))}
             </select>
@@ -147,8 +149,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
                     fillRule="evenodd"
                     clipRule="evenodd"
                     d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                    fill=""
-                  ></path>
+                  />
                 </g>
               </svg>
             </span>
