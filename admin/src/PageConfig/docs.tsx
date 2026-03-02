@@ -8,6 +8,9 @@ import createModuleRoutes from "../PageConfig/createConf";
 const testCreateFields = [
     { type: "text", name: "Name" },
     { type: "editor", name: "Description" },
+    {
+        type: "option", name: "Gallery_Category_Id", optionBy: "Name", valueBy: "Id", url: "/api/admin/gallery-category",
+    },
     { type: "date", name: "Date" },
     { type: "file", name: "Image", multiple: false },
     {

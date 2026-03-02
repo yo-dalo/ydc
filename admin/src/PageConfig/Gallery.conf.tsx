@@ -1,15 +1,13 @@
 import createModuleRoutes from "../PageConfig/createConf";
 
 const galleryCreateFields = [
-  { type: "number", name: "Gallery_Category_Id" },
   {
     type: "option", name: "Gallery_Category_Id", optionBy: "Name", valueBy: "Id", url: "/api/admin/gallery-category",
   },
 
   { type: "file", ype: "file", name: "Image", multiple: true },
-  { type: "text", name: "Description" },
+  { type: "editor", name: "Description" },
   { name: "Image", multiple: true },
-  { type: "text", name: "Description" },
   {
     type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
