@@ -67,6 +67,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
           res?.data ??
           [];
 
+          console.log(apiData)
         setResData(Array.isArray(apiData) ? apiData : []);
         console.log(apiData)
 
