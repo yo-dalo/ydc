@@ -19,7 +19,7 @@ const ECommerce: React.FC = () => {
 
     Yo.get("/api/admin/").then((data) => {
       console.log(data.data);
-      setCount(data?.data);
+      setCount(data?.data || {});
     }).catch((r) => {
       console.log(r);
 
