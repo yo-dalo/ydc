@@ -82,7 +82,6 @@ static async create(data, Image, branchId) {
 
   return created ? created.Id || created.id || created.get("Id") : null;
 }static async create(data, Image, branchId) {
-  console.log(Image);
 
   const created = await gallery.create({ ...data, Branch_Id: branchId });
 
