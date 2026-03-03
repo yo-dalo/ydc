@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const posterController = require("../controllers/posterController");
-
-router.get("/", posterController.getAll);
+const checkBranch = require("../../middleware/subdomainMiddleware");
+router.get("/", checkBranch, posterController.getAll);
 router.get("/:id", posterController.getById);
 router.get("/for-update/:id", posterController.getForUpdate);
 router.post("/", posterController.create);
