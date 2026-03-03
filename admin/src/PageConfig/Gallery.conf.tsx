@@ -5,9 +5,8 @@ const galleryCreateFields = [
     type: "option", name: "Gallery_Category_Id", optionBy: "Name", valueBy: "Id", url: "/api/admin/gallery-category",
   },
 
-  { type: "file", ype: "file", name: "Image", multiple: true },
+  { type: "file",  name: "Image", multiple: true },
   { type: "editor", name: "Description" },
-  { name: "Image", multiple: true },
   {
     type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [

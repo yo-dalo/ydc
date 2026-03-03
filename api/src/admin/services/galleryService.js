@@ -3,7 +3,7 @@ const sequelize = require("../../config/database");
 const { Op } = require("sequelize");
 
 const models = initModels(sequelize);
-const { gallery } = models;
+const { gallery, gallery_image } = models;
 
 class GalleryService {
   static async getAll({
@@ -14,7 +14,7 @@ class GalleryService {
     sortOrder = "DESC",
     isActive = null,
     indexNo = null,
-      branchId = null,
+    branchId = null,
   } = {}) {
     const offset = (page - 1) * limit;
     const where = { Branch_Id: branchId };
@@ -65,14 +65,42 @@ class GalleryService {
     return await gallery.findOne({ where: { Id: id, Branch_Id: branchId } });
   }
 
-  static async create(data,Image, branchId) {
-    console.log(Image)
-    const created = await gallery.create({...data, Image: Image, Branch_Id: branchId});
-    return created ? created.Id || created.id || created.get("Id") : null;
+static async create(data, Image, branchId) {
+  console.log(Image);
+
+  const created = await gallery.create({ ...data, Branch_Id: branchId });
+
+  if (Array.isArray(Image) && Image.length > 0) {
+    for (const img of Image) {
+      await gallery_image.create({
+        Gallery_Id: created.Id,
+        Image: img,
+        Branch_Id: branchId
+      });
+    }
   }
 
-  static async update(id, data,Image, branchId) {
-      const updateData = Image ? { ...data, Image: Image } : data;
+  return created ? created.Id || created.id || created.get("Id") : null;
+}static async create(data, Image, branchId) {
+  console.log(Image);
+
+  const created = await gallery.create({ ...data, Branch_Id: branchId });
+
+  if (Array.isArray(Image) && Image.length > 0) {
+    for (const img of Image) {
+      await gallery_image.create({
+        Gallery_Id: created.Id,
+        Image: img,
+        Branch_Id: branchId
+      });
+    }
+  }
+
+  return created ? created.Id || created.id || created.get("Id") : null;
+}
+
+  static async update(id, data, Image, branchId) {
+    const updateData = Image ? { ...data, Image: Image } : data;
     const [affected] = await gallery.update(updateData, { where: { Id: id, Branch_Id: branchId } });
     return affected > 0;
   }

@@ -1,22 +1,14 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('gallery', {
+  return sequelize.define('gallery_image', {
     Id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    Gallery_Category_Id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'gallery_category',
-        key: 'Id'
-      }
-    },
-    Description: {
-      type: DataTypes.TEXT,
+    Image: {
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     Is_Active: {
@@ -26,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'gallery',
+    tableName: 'gallery_image',
     timestamps: true,
     indexes: [
       {
@@ -35,13 +27,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "Id" },
-        ]
-      },
-      {
-        name: "Gallery_Category_Id",
-        using: "BTREE",
-        fields: [
-          { name: "Gallery_Category_Id" },
         ]
       },
     ]
