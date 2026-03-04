@@ -14,9 +14,10 @@ class NotificationService {
     sortOrder = "DESC",
     isActive = "active",
     indexNo = null,
+     branchId = null
   } = {}) {
     const offset = (page - 1) * limit;
-    const where = {};
+    const where = { Branch_Id: branchId };
 
     // Search functionality
     if (search) {
