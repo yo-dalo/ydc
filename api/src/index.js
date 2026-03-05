@@ -23,6 +23,8 @@ const allowedOrigins = [
   'http://localhost:5174',
   'http://localhost:7700',
   'http://localhost:3000',
+  'http://localhost:3001',
+  'http://localhost:3002',
   'http://localhost:5000',
   'http://0.0.0.0:5173',
   'http://192.168.43.1:5173',
