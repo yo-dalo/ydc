@@ -2,7 +2,7 @@ import React, { useRef, useMemo } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const Editer = ({ label, disabled, value, onChange, ignore = [], className, tamplet = [] }) => {
+const Editer = ({ label, disabled, placeholder, value, onChange, ignore = [], className, tamplet = [] }) => {
   const editorRef = useRef(null);
 
   const complement = useMemo(() => {

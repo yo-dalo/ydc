@@ -216,7 +216,7 @@ Update.propTypes = {
   url: PropTypes.string.isRequired,
   inputs: PropTypes.arrayOf(
     PropTypes.shape({
-      type: PropTypes.oneOf(['text', 'number', 'password', 'checkbox', 'date', 'text-area', 'option', 'file', 'multiInputs']).isRequired,
+      type: PropTypes.oneOf(['text', 'number', 'password', 'checkbox', 'date', 'text-area', 'option', 'file', 'multiInputs', "editor",]).isRequired,
       name: PropTypes.string.isRequired,
       // Add other prop-specific validations
     })
