@@ -2,7 +2,6 @@
 
 const initModels = require("../models/init-models");
 const sequelize = require("../config/database");
-const { Op } = require("sequelize");
 
 const models = initModels(sequelize);
 const { branch } = models;
@@ -10,19 +9,21 @@ const { branch } = models;
 const checkBranch = async (req, res, next) => {
     try {
         const host = req.headers.host;
+        const headerSubdomain = req.headers["x-subdomain"];
 
-        if (!host) {
+        if (!host && !headerSubdomain) {
             return res.status(400).json({ message: "Host not found" });
         }
 
-        const hostname = host.split(":")[0];
-        const parts = hostname.split(".");
+        let subdomain = headerSubdomain;
 
-        if (parts.length < 2) {
-            return res.status(400).json({ message: "Subdomain not found" });
+        if (!subdomain && host) {
+            const hostname = host.split(":")[0];
+            const parts = hostname.split(".");
+            if (parts.length >= 2) {
+                subdomain = parts[0];
+            }
         }
-
-        const subdomain = parts[0];
 
         if (!subdomain) {
             return res.status(400).json({ message: "Subdomain not found" });
@@ -40,7 +41,6 @@ const checkBranch = async (req, res, next) => {
             Branch_Id: branchData.Id,
             subdomain: branchData.Sub_Domain
         };
-
 
         next();
     } catch (error) {

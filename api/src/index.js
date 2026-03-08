@@ -23,6 +23,7 @@ const allowedOrigins = [
   'http://localhost:5174',
   'http://localhost:7700',
   'http://localhost:3000',
+  " http://yo.localhost:3001/",
   'http://localhost:3001',
   'http://localhost:3002',
   'http://localhost:5000',
@@ -52,6 +53,43 @@ app.use(cors({
 
 
 
+
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin) {
+//       // Allow requests without origin (curl, Postman, server-to-server)
+//       return callback(null, true);
+//     }
+
+//     try {
+//       const originUrl = new URL(origin);
+//       const hostname = originUrl.hostname;
+
+//       // Allow:
+//       // - localhost + any port (for main dev)
+//       // - any-subdomain.localhost + any port (your multi-tenant dev setup)
+//       // - 192.168.x.x, 10.x.x.x, etc. for local network testing
+//       // - Add your production domain later (e.g. .yourapp.com)
+
+//       if (
+//         hostname === 'localhost' ||
+//         hostname.endsWith('.localhost') ||
+//         hostname.match(/^(192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.)/) || // local IPs
+//         hostname === '127.0.0.1'
+//       ) {
+//         // Mirror back the exact origin the browser sent (required for credentials: true)
+//         callback(null, origin);
+//       } else {
+//         callback(new Error('Not allowed by CORS'));
+//       }
+//     } catch (err) {
+//       callback(new Error('Invalid origin'));
+//     }
+//   },
+//   credentials: true,          // Keep this if using cookies/sessions
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+// }));
 
 
 
