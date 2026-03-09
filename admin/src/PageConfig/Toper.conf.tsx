@@ -5,7 +5,7 @@ const toperCreateFields = [
   { type: "number", name: "Index_No" },
   { type: "file", name: "Image", multiple: false },
   { type: "text", name: "Marks_Percentage" },
-  { type: "text", name: "Description" },
+  { type: "editor", name: "Description" },
   { type: "text", name: "Year" },
 
   {
@@ -14,7 +14,7 @@ const toperCreateFields = [
       { value: "male", label: "male" },
       { value: "female", label: "female" }]
   },
-  { type: "text", name: "Class" },
+  { type: "text", name: "Student_Class" },
   { type: "text", name: "Father_name" },
   { type: "text", name: "Rank" },
   {

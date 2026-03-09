@@ -15,10 +15,6 @@ module.exports = function(sequelize, DataTypes) {
         key: 'Id'
       }
     },
-    Image: {
-      type: DataTypes.STRING(500),
-      allowNull: true
-    },
     Description: {
       type: DataTypes.TEXT,
       allowNull: true

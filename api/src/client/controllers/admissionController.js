@@ -11,6 +11,8 @@ exports.getAll = async (req, res) => {
       sortOrder: req.query.sortOrder || "DESC",
       isActive: req.query.isActive,
       indexNo: req.query.indexNo,
+       branchId: req.subdomain.Branch_Id
+      
     });
 
     return successResponse(res, "Admission fetched successfully", result);

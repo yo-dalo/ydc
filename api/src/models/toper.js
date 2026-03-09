@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('toper', {
     Id: {
       autoIncrement: true,
@@ -32,10 +32,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     Gender: {
-      type: DataTypes.ENUM('male','female'),
+      type: DataTypes.ENUM('male', 'female'),
       allowNull: false
     },
-    ' Class': {
+    Student_Class: {
       type: DataTypes.STRING(17),
       allowNull: false
     },
@@ -48,7 +48,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     Is_Active: {
-      type: DataTypes.ENUM('active','inactive'),
+      type: DataTypes.ENUM('active', 'inactive'),
       allowNull: true,
       defaultValue: "active"
     }

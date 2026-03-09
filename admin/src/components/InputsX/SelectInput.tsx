@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import React, { useState, useEffect, useMemo } from 'react';
+import axios from 'axios';
 
 interface SelectInputProps {
   url: string;
   name: string;
-  optionShowBy: string;
-  optionValue: string;
+  optionShowBy: string;       // key to display (label)
+  optionValue: string;        // key for <option value="">
   setSelecter: (name: string, value: string) => void;
   selectedValue?: string;
-  error?: any[];
-  linkTo?: string;
-  linkToValue?: string;
-  toLink?: Record<string, any> | string;
-  toLinkValue?: string;
-  toLinkValueAlt?: string;
-  options?: any[];
+  error?: string[];           // changed to string[] for simplicity
+  /** Optional static options — if provided, API is not called */
+  options?: Array<Record<string, any>>;
+  /** Optional: dynamic URL suffix (most common case: /url/{id}) */
+  parentId?: string | number | null;
+  /** Optional: full custom endpoint override (takes precedence) */
+  customEndpoint?: string;
+  disabled?: boolean;
+  placeholder?: string;
+  className?: string;
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -23,7 +26,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   optionShowBy,
   optionValue,
   setSelecter,
-  selectedValue,
+  selectedValue = '',
   error = [],
   linkTo,
   linkToValue,
@@ -32,13 +35,22 @@ const SelectInput: React.FC<SelectInputProps> = ({
   toLinkValueAlt,
   options
 }) => {
-  const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
-  const [resData, setResData] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [data, setData] = useState<Array<Record<string, any>>>([]);
+  const [loading, setLoading] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
-  const changeTextColor = () => {
-    setIsOptionSelected(true);
-  };
+  // Final options — prefer static → fallback to fetched
+  const finalOptions = useMemo(() => {
+    if (staticOptions.length > 0) return staticOptions;
+    return data;
+  }, [staticOptions, data]);
+
+  // Determine final endpoint
+  const endpoint = useMemo(() => {
+    if (customEndpoint) return customEndpoint;
+    if (parentId == null) return url;
+    return `${url}/${parentId}`;
+  }, [url, parentId, customEndpoint]);
 
   useEffect(() => {
     // ✅ If options are provided, use them and skip API call
@@ -48,9 +60,9 @@ const SelectInput: React.FC<SelectInputProps> = ({
     }
 
     const controller = new AbortController();
-    setIsLoading(true);
 
-    const fetchData = async () => {
+    const fetchOptions = async () => {
+      setLoading(true);
       try {
         const effectiveLinkTo = toLink ?? linkTo;
         let effectiveLinkToValue = toLinkValue ?? linkToValue ?? toLinkValueAlt;
@@ -80,10 +92,10 @@ const SelectInput: React.FC<SelectInputProps> = ({
         setResData(Array.isArray(apiData) ? apiData : []);
       } catch (err: any) {
         if (!axios.isCancel(err)) {
-          console.error("Fetch error:", err);
+          console.error(`Failed to load ${name} options:`, err);
         }
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
 
@@ -101,10 +113,10 @@ const SelectInput: React.FC<SelectInputProps> = ({
       </label>
 
       <div className="relative z-20 bg-transparent dark:bg-form-input">
-        {isLoading ? (
-          <div className="flex items-center justify-center py-3 px-5">
-            <span className="animate-spin">🌀</span>
-            <span className="ml-2">Loading...</span>
+        {loading ? (
+          <div className="flex items-center justify-center py-3 px-5 text-gray-500 dark:text-gray-400">
+            <span className="animate-spin mr-2">🌀</span>
+            Loading {labelText.toLowerCase()}...
           </div>
         ) : (
           <>
@@ -112,7 +124,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
               value={selectedValue}
               onChange={(e) => {
                 setSelecter(name, e.target.value);
-                changeTextColor();
+                setHasInteracted(true);
               }}
               className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ${isOptionSelected || selectedValue
                   ? "text-black dark:text-white"
@@ -135,7 +147,8 @@ const SelectInput: React.FC<SelectInputProps> = ({
               ))}
             </select>
 
-            <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
+            {/* Dropdown arrow */}
+            <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2 pointer-events-none">
               <svg
                 className="fill-current"
                 width="24"
@@ -157,10 +170,10 @@ const SelectInput: React.FC<SelectInputProps> = ({
         )}
       </div>
 
-      {error?.length > 0 && (
-        <div className="mt-1 text-xs text-red-500">
-          {error.join(", ")}
-        </div>
+      {error.length > 0 && (
+        <p className="mt-1.5 text-xs text-red-600 dark:text-red-400">
+          {error.join(', ')}
+        </p>
       )}
     </div>
   );

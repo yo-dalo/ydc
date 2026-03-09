@@ -194,6 +194,7 @@ Create.propTypes = {
         'option',
         'file',
         'multiInputs',
+        "editor",
       ]).isRequired,
       name: PropTypes.string.isRequired,
       multiple: PropTypes.bool,

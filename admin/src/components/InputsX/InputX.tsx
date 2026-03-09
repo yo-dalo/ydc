@@ -6,9 +6,10 @@ import SelectInput from './SelectInput';
 import FileInput from './FileInput';
 import Input from './Input';
 import MultiInput from './MultiInput';
+import Editer from './Editer';
 
 interface InputElement {
-  type: 'text' | 'number' | 'text-area' | 'option' | 'file' | 'multiInputs';
+  type: 'text' | 'number' | 'text-area' | 'option' | 'file' | 'multiInputs' | "editor";
   name: string;
   valueBy?: string;
   optionBy?: string;
@@ -60,8 +61,9 @@ const InputX = ({ inputs, name, get, value = {} }: InputXProps) => {
         return <Input {...commonProps} placeholder="Enter value" />;
       case 'number':
         return <InputNumber {...commonProps} placeholder="Enter value" />;
-      case 'text-area':
-        return <InputTextArea {...commonProps} placeholder="Enter value" />;
+      case 'editor':
+        return <Editer {...commonProps} key={index} placeholder="Enter value" />;
+
       case 'option':
         return (
           <SelectInput

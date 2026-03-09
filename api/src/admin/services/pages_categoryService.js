@@ -14,9 +14,10 @@ class PagesCategoryService {
     sortOrder = "DESC",
     isActive = null,
     indexNo = null,
+    branchId = null,
   } = {}) {
     const offset = (page - 1) * limit;
-    const where = {};
+    const where = { Branch_Id: branchId };
 
     // Search functionality
     if (search) {
@@ -60,26 +61,26 @@ class PagesCategoryService {
     };
   }
 
-  static async getById(id) {
-    return await pages_category.findByPk(id);
+  static async getById(id, branchId) {
+    return await pages_category.findOne({ where: { Id: id, Branch_Id: branchId } });
   }
 
-  static async create(data) {
-    const created = await pages_category.create(data);
+  static async create(data, branchId) {
+    const created = await pages_category.create({ ...data, Branch_Id: branchId });
     return created ? created.Id || created.id || created.get("Id") : null;
   }
 
-  static async update(id, data) {
-    const [affected] = await pages_category.update(data, { where: { Id: id } });
+  static async update(id, data, branchId) {
+    const [affected] = await pages_category.update(data, { where: { Id: id, Branch_Id: branchId } });
     return affected > 0;
   }
 
-  static async getForUpdate(id) {
-    return await pages_category.findByPk(id);
+  static async getForUpdate(id, branchId) {
+    return await pages_category.findOne({ where: { Id: id, Branch_Id: branchId } });
   }
 
-  static async delete(id) {
-    const deleted = await pages_category.destroy({ where: { Id: id } });
+  static async delete(id, branchId) {
+    const deleted = await pages_category.destroy({ where: { Id: id, Branch_Id: branchId } });
     return deleted > 0;
   }
 }

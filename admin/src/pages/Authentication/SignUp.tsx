@@ -8,13 +8,31 @@ import Axios from 'axios';
 import Yo from "../../common/Helper/Yo";
 import admin_Conf from '../../Admin.conf';
 import { useAuth } from "../../context/AuthContext";
+import SelectInput from '../../components/InputsX/SelectInput';
 const SignUp: React.FC = () => {
 
 
   const { register } = useAuth();
 
   const [formData, setFormData] = useState<Record<string, any>>({});
+  const [branches, setBranches] = useState<any[]>([]);
   const { webSideName } = admin_Conf;
+
+
+  useEffect(() => {
+    const fetchBranches = async () => {
+      const res = await Yo.get("/api/admin/branch");
+     
+      setBranches(res.data || []);
+    };
+    fetchBranches();
+  }, []);
+
+
+
+
+
+
   const handleFormData = (key: string, value: any) => {
     setFormData(prev => ({ ...prev, [key]: value }));
   }
@@ -174,6 +192,29 @@ const SignUp: React.FC = () => {
               </h2>
 
               <form onSubmit={handleSubmit}>
+
+
+                <div className="mb-4">
+                  <label className="mb-2.5 block font-medium text-black dark:text-white">
+                    Branch
+                  </label>
+                  <div className="relative">
+                    <select
+                      onChange={(e) => handleFormData("Branch_Id", e.target.value)}
+                      value={formData.Branch_Id || ""}
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    >
+                      <option value="">Select Branch</option>
+                      {branches.map((item: any) => (
+                        <option key={item.Id || item.id} value={item.Id || item.id}>
+                          {item.Name || item.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Name

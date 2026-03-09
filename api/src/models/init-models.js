@@ -18,6 +18,8 @@ var _school_welcome_message = require("./school_welcome_message");
 var _toper = require("./toper");
 var _toper_category = require("./toper_category");
 var _useful_link = require("./useful_link");
+var _branch = require("./branch");
+var _gallery_image = require("./gallery_image");
 
 function initModels(sequelize) {
   var achievements = _achievements(sequelize, DataTypes);
@@ -39,11 +41,39 @@ function initModels(sequelize) {
   var toper = _toper(sequelize, DataTypes);
   var toper_category = _toper_category(sequelize, DataTypes);
   var useful_link = _useful_link(sequelize, DataTypes);
+  var branch = _branch(sequelize, DataTypes);
+  var gallery_image = _gallery_image(sequelize, DataTypes);
 
-  gallery.belongsTo(gallery_category, { as: "Gallery_Category", foreignKey: "Gallery_Category_Id"});
-  gallery_category.hasMany(gallery, { as: "galleries", foreignKey: "Gallery_Category_Id"});
-  pages.belongsTo(pages_category, { as: "Pages_Category", foreignKey: "Pages_Category_Id"});
-  pages_category.hasMany(pages, { as: "pages", foreignKey: "Pages_Category_Id"});
+  gallery.belongsTo(gallery_category, { as: "Gallery_Category", foreignKey: "Gallery_Category_Id" });
+  gallery_category.hasMany(gallery, { as: "galleries", foreignKey: "Gallery_Category_Id" });
+  pages.belongsTo(pages_category, { as: "Pages_Category", foreignKey: "Pages_Category_Id" });
+  pages_category.hasMany(pages, { as: "pages", foreignKey: "Pages_Category_Id" });
+  achievements.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  blog.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  school_info.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  school_welcome_message.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  toper.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  toper_category.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  useful_link.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  poster.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  admins.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  facility.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  admission.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  admission_open_message.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  messages.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  notification.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  pages.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  pages_category.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  gallery.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  gallery_category.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  quick_link.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  gallery_image.belongsTo(branch, { foreignKey: "Branch_Id", as: "Branch" });
+  gallery_image.belongsTo(gallery, { as: "Gallery", foreignKey: "Gallery_Id" });
+  gallery.hasMany(gallery_image, { as: "gallery_images", foreignKey: "Gallery_Id" });
+
+
+
+
 
   return {
     achievements,
@@ -65,6 +95,8 @@ function initModels(sequelize) {
     toper,
     toper_category,
     useful_link,
+    branch,
+    gallery_image
   };
 }
 module.exports = initModels;

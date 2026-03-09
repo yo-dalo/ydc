@@ -11,6 +11,7 @@ exports.getAll = async (req, res) => {
       sortOrder: req.query.sortOrder || "DESC",
       isActive: req.query.isActive,
       indexNo: req.query.indexNo,
+        branchId: req.admin.Branch_Id
     });
 
     return successResponse(res, "Gallery Category fetched successfully", result);
@@ -22,7 +23,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const item = await GalleryCategoryService.getById(req.params.id);
+    const item = await GalleryCategoryService.getById(req.params.id, req.admin.Branch_Id);
     if (!item) return errorResponse(res, "Gallery Category not found", 404);
     return successResponse(res, "Gallery Category fetched successfully", item);
   } catch (error) {
@@ -32,7 +33,7 @@ exports.getById = async (req, res) => {
 
 exports.getForUpdate = async (req, res) => {
   try {
-    const item = await GalleryCategoryService.getForUpdate(req.params.id);
+    const item = await GalleryCategoryService.getForUpdate(req.params.id, req.admin.Branch_Id);
     if (!item) return errorResponse(res, "Gallery Category not found", 404);
     return successResponse(res, "Gallery Category fetched successfully", item);
   } catch (error) {
@@ -42,7 +43,7 @@ exports.getForUpdate = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const id = await GalleryCategoryService.create(req.body);
+    const id = await GalleryCategoryService.create(req.body, req.admin.Branch_Id);
     return successResponse(res, "Gallery Category added successfully", { id }, 201);
   } catch (error) {
     return errorResponse(res, error.message);
@@ -51,7 +52,7 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    const updated = await GalleryCategoryService.update(req.params.id, req.body);
+    const updated = await GalleryCategoryService.update(req.params.id, req.body, req.admin.Branch_Id);
     if (!updated) return errorResponse(res, "Gallery Category not found or no changes made", 404);
     return successResponse(res, "Gallery Category updated successfully");
   } catch (error) {
@@ -61,7 +62,7 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const deleted = await GalleryCategoryService.delete(req.params.id);
+    const deleted = await GalleryCategoryService.delete(req.params.id, req.admin.Branch_Id);
     if (!deleted) return errorResponse(res, "Gallery Category not found", 404);
     return successResponse(res, "Gallery Category deleted successfully");
   } catch (error) {
