@@ -18,7 +18,7 @@ const SelectRoleParmitions = ({send}) => {
   };
   const getParmissions = async () => {
     const res = await Yo.get("/api/permissions/");
-    console.log(res);
+    
     setMyp(res.data);
   };
 

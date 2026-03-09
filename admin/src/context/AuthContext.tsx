@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }: { children?: any }) => {
     try {
       const res = await Yo.get("/api/admin/auth/")
 
-      console.log(res.data.user)
+     
 
 
       const { Name, phone, Email, Id, img } = res.data.user
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: { children?: any }) => {
       const res = await Yo.post("/api/admin/auth/login", adminData);
 
       if (res?.data?.status === "error" || res?.response?.data?.status === "error") {
-        console.log(res.response.data.message)
+        
         toast.error( res.response.data.message);
       } else {
         const { Name, phone, Email, Id, img } = res.data;

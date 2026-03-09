@@ -18,7 +18,7 @@ const InputCheckbox = ({ label, placeholder, disabled, value, onChange, ignore =
 
     useEffect(() => {
 
-        console.log(value)
+       
 
         const findComplement = () => {
             const result = name.filter((x) => !ignore.includes(x));

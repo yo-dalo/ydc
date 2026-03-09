@@ -19,7 +19,7 @@ class PosterService {
     const offset = (page - 1) * limit;
 
     const where = { Branch_Id: branchId };
-    console.log(branchId)
+    
     // Search functionality
     if (search) {
       where[Op.or] = [

@@ -29,7 +29,7 @@ const DataDisplay = ({url,deleteImgUrl="",pageName="--"}) => {
 
 const deleteImg = async(id,index)=>{
  
-// console.log(imgRef.current.style.display='none')
+
 try {
  await Yo.delete(deleteImgUrl+id)
    imgRef.current[index].style.display='none'

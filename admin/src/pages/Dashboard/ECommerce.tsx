@@ -18,16 +18,16 @@ const ECommerce: React.FC = () => {
   useEffect(() => {
 
     Yo.get("/api/admin/").then((data) => {
-      console.log(data.data);
+      
       setCount(data?.data || {});
     }).catch((r) => {
-      console.log(r);
+     
 
     })
 
   }, [])
   useEffect(() => {
-    console.log(count);
+    
   }, [count])
 
 
