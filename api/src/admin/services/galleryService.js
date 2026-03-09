@@ -66,7 +66,7 @@ class GalleryService {
   }
 
 static async create(data, Image, branchId) {
-  console.log(Image);
+
 
   const created = await gallery.create({ ...data, Branch_Id: branchId });
 

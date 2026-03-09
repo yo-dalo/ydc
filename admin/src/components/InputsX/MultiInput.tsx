@@ -36,13 +36,13 @@ const MultiInput: React.FC<MultiInputProps> = ({ inputs = [], name, get = () => 
 
   const add = (index, obj) => {
     // setAll([...all,obj])
-    console.info(obj);
+   
     addOrReplaceItem(index, obj)
 
   }
 
   useEffect(() => {
-    console.log("value", value);
+   
     get(all)
   }, [all])
 

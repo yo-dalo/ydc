@@ -19,7 +19,7 @@ const adminAuth = (req, res, next) => {
         if (err.name === 'TokenExpiredError') {
             return res.status(401).json({ message: 'Unauthorized: Token expired' });
         }
-        console.log('Token verification failed:', err.message);
+     
         return res.status(403).json({ message: 'Forbidden: Invalid token' });
     }
 };

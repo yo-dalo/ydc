@@ -41,7 +41,7 @@ const CreateEdit = ({ type, pageName, name, ignore, selecter, file, addUrl, edit
 
 
   useEffect(() => {
-    console.log(selecter);
+   
 
     axios.get(type == "edit" ? url + id : url + 1).then((res) => {
       if (type == "edit") {

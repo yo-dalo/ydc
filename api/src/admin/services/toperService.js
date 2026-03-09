@@ -66,7 +66,7 @@ class ToperService {
   }
 
   static async create(data, Image, branchId) {
-    console.log(data)
+   
     const created = await toper.create({
       ...data,
       // Class: data.Studen_Class,
@@ -74,7 +74,7 @@ class ToperService {
       Branch_Id: branchId,
     });
 
-    console.log(created);
+   
 
     return created ? created.Id || created.id || created.get("Id") : null;
   }
