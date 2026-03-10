@@ -6,7 +6,7 @@ const { school_info } = models;
 
 class SchoolInfoService {
   static async getAll() {
-    return await school_info.findAll();
+    return await school_info.findAll({ where: { Is_Active: "active" } });
   }
 
   static async getById(id) {

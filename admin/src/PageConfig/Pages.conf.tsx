@@ -9,8 +9,9 @@ const pagesCreateFields = [
     optionBy: "Name"
   },
   // { type: "number", name: "Pages_Category_Id" },
-  { type: "editor", name: "Page_Data" },
-   {
+  { type: "html", name: "Page_Data" },
+  
+  {
     type: "option", name: "Is_Active", optionBy: "label", valueBy: "value",
     options: [
       { label: "active", value: "active" },

@@ -1,6 +1,7 @@
 const initModels = require("../../models/init-models");
 const sequelize = require("../../config/database");
 const { Op } = require("sequelize");
+const deleteImage = require("../../utils/deleteImage")
 
 const models = initModels(sequelize);
 const { poster } = models;
@@ -81,8 +82,14 @@ class PosterService {
   }
 
   static async delete(id, branchId) {
-    const deleted = await poster.destroy({ where: { Id: id, Branch_Id: branchId } });
-    return deleted > 0;
+    const record = await poster.findOne({ where: { Id: id, Branch_Id: branchId } });
+    if (!record) return false;
+
+    await poster.destroy({ where: { Id: id, Branch_Id: branchId } });
+
+    if (record.Image) await deleteImage(record.Image);
+
+    return true;
   }
 }
 

@@ -15,6 +15,7 @@ import Input from '../components/InputsX/Input';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import PropTypes from 'prop-types';
 import Editer from '../components/InputsX/Editer';
+import HtmlInputWithPreview from '../components/InputsX/HtmlInputWithPreview';
 
 const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
   const navigate = useNavigate();
@@ -118,6 +119,8 @@ const Update = ({ url, inputs, pageName = "Form Layout", children }) => {
       case 'editor':
         return <Editer {...commonProps} key={index} placeholder="Enter value" />;
 
+      case 'html':
+        return <HtmlInputWithPreview {...commonProps} key={index} placeholder="Enter value" />;
 
 
       case 'option':

@@ -52,7 +52,7 @@ function App() {
             element={
               <>
                 <ProtectedRoute>
-                  <PageTitle title="eCommerce Dashboard | ydc - Tailwind CSS Admin Dashboard Template" />
+                  <PageTitle title=" Dashboard | ydc " />
                   <ECommerce />
                 </ProtectedRoute>
               </>
@@ -92,7 +92,7 @@ function App() {
             element={
               <>
                 <ProtectedRoute>
-                  <PageTitle title="Settings | ydc - Tailwind CSS Admin Dashboard Template" />
+                  <PageTitle title="Settings | ydc " />
                   <Settings />
                 </ProtectedRoute>
               </>
@@ -110,7 +110,7 @@ function App() {
             path="/auth/signin"
             element={
               <>
-                <PageTitle title="Signin | ydc - Tailwind CSS Admin Dashboard Template" />
+                <PageTitle title="Signin | ydc - " />
                 <SignIn />
               </>
             }
@@ -119,7 +119,7 @@ function App() {
             path="/auth/register-success"
             element={
               <>
-                <PageTitle title="Register Success   | ydc - Tailwind CSS Admin Dashboard Template" />
+                <PageTitle title="Register Success   | ydc " />
                 <RegisterSuccess />
               </>
             }
@@ -130,7 +130,7 @@ function App() {
             path="/auth/signup"
             element={
               <>
-                <PageTitle title="Signup | ydc - Tailwind CSS Admin Dashboard Template" />
+                <PageTitle title="Signup | ydc " />
                 <SignUp />
               </>
             }
