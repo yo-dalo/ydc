@@ -11,6 +11,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(100),
             allowNull: false
         },
+        type: {
+            type: DataTypes.ENUM('school', 'college'),
+            allowNull: true,
+        },
         Sub_Domain: {
             type: DataTypes.STRING(100),
             allowNull: false

@@ -110,7 +110,7 @@ sequelize.authenticate()
 
 // sirf ek baar development mein
 
-// sequelize.sync({ force: true })
+// sequelize.sync({ force: false })
 //   .then(() => console.log('Models synced'));
 
 
@@ -127,17 +127,17 @@ app.use("/api/client", clientRoutes)
 
 
 
-app.get('/x', async (req, res) => {
-  try {
+// app.get('/x', async (req, res) => {
+//   try {
 
-    const { messages } = Models;
-    const allmessages = await messages.findAll();
-    res.json(allmessages);
-  } catch (err) {
-    console.error('Error fetching pages:', err);
-    res.status(500).json({ error: err.message });
-  }
-});
+//     const { messages } = Models;
+//     const allmessages = await messages.findAll();
+//     res.json(allmessages);
+//   } catch (err) {
+//     console.error('Error fetching pages:', err);
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
 
 
